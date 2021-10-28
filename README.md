@@ -28,28 +28,8 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
-* [`terrain hello [FILE]`](#terrain-hello-file)
 * [`terrain help [COMMAND]`](#terrain-help-command)
-
-## `terrain hello [FILE]`
-
-describe the command here
-
-```
-USAGE
-  $ terrain hello [FILE]
-
-OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
-
-EXAMPLE
-  $ terrain hello
-  hello world from ./src/hello.ts!
-```
-
-_See code: [src/commands/hello.ts](https://github.com/iboss-ptk/terrain/terrain/blob/v0.0.0/src/commands/hello.ts)_
+* [`terrain new NAME`](#terrain-new-name)
 
 ## `terrain help [COMMAND]`
 
@@ -67,4 +47,22 @@ OPTIONS
 ```
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.3/src/commands/help.ts)_
+
+## `terrain new NAME`
+
+create new dapp from template
+
+```
+USAGE
+  $ terrain new NAME
+
+OPTIONS
+  --path=path  path to keep the project
+
+EXAMPLES
+  $ terrain new awesome-dapp
+  $ terrain new awesome-dapp --path path/to/dapp
+```
+
+_See code: [src/commands/new.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.0/src/commands/new.ts)_
 <!-- commandsstop -->
