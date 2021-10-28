@@ -23,6 +23,10 @@ export default class New extends Command {
   async run() {
     const { args, flags } = this.parse(New)
 
+    if (flags.path) {
+      process.chdir(flags.path)
+    }
+
     cli.log('Generating: ')
     cli.action.start('- contract')
 
