@@ -37,7 +37,7 @@ export default class New extends Command {
     process.chdir('contracts')
 
 
-    execSync(`cargo generate --git https://github.com/CosmWasm/cw-template.git --name ${args.name}`)
+    execSync(`cargo generate --git https://github.com/CosmWasm/cw-template.git --branch 0.16 --name ${args.name}`)
 
     cli.action.stop()
 
