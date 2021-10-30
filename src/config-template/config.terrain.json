@@ -21,5 +21,23 @@
         }
       }
     }
+  },
+  "mainnet": {
+    "_connection": {
+      "chainID": "columbus-5",
+      "URL": "https://lcd.terra.dev"
+    }
+  },
+  "testnet": {
+    "_connection": {
+      "chainID": "bombay-12",
+      "URL": "https://bombay-lcd.terra.dev"
+    }
+  },
+  "localterra": {
+    "_connection": {
+      "chainID": "localterra",
+      "URL": "http://localhost:3060"
+    }
   }
 }

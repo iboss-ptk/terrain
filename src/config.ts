@@ -1,6 +1,6 @@
 import * as R from "ramda";
 import * as fs from "fs-extra";
-import { MnemonicKey, RawKey } from "@terra-money/terra.js";
+import { LCDClientConfig, MnemonicKey, RawKey } from "@terra-money/terra.js";
 import { cli } from "cli-ux";
 
 type Fee = {
@@ -23,7 +23,18 @@ type Config = {
 
 type GlobalConfig = {
   _base: ContractConfig;
-} & Config;
+  [contract: string]: ContractConfig;
+};
+
+export const connection =
+  (networks: { [network: string]: { _connection: LCDClientConfig } }) =>
+  (network: string) =>
+    networks[network]._connection ||
+    cli.error(`network '${network}' not found in config`);
+
+export const loadConnections = (
+  path = `${__dirname}/config-template/config.terrain.json`
+) => connection(fs.readJSONSync(path));
 
 export const config =
   (allConfig: { _global: GlobalConfig; [network: string]: Partial<Config> }) =>

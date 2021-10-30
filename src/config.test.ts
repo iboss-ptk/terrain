@@ -143,7 +143,7 @@ test("config with overrides in _base for the network should overrides for all th
 
 test("load config", () => {
   const conf = loadConfig();
-  expect(conf("local", "contract_a")).toEqual({
+  expect(conf("localterra", "contract_a")).toEqual({
     store: {
       fee: {
         gasLimit: 2000000,

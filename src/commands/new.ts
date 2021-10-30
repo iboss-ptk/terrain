@@ -22,6 +22,12 @@ export default class New extends Command {
   async run() {
     const { args, flags } = this.parse(New);
 
+    const isNameSnakeCase = /^[a-z0-9]+(?:_[a-z0-9]+)*$/.test(args.name);
+
+    if (!isNameSnakeCase) {
+      cli.error("name must be snake_case");
+    }
+
     cli.log("generating: ");
     cli.action.start("- contract");
 

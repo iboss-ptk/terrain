@@ -40,7 +40,7 @@ export const storeCode = async ({
     .readFileSync(`artifacts/${contract}.wasm`)
     .toString("base64");
 
-  cli.action.start("Storing wasm bytecode on chain");
+  cli.action.start("storing wasm bytecode on chain");
 
   const store = conf.store;
   const storeCodeTx = await signer.createAndSignTx({

@@ -1,25 +1,9 @@
 import { Command, flags } from "@oclif/command";
-import {
-  LCDClient,
-  LocalTerra,
-  MnemonicKey,
-  Wallet,
-} from "@terra-money/terra.js";
-import { loadConfig, loadKeys } from "../config";
+import { LCDClient, LocalTerra, Wallet } from "@terra-money/terra.js";
+import { loadConfig, loadConnections, loadKeys } from "../config";
 import { instantiate, storeCode } from "../lib/deploy";
 import * as path from "path";
 import { cli } from "cli-ux";
-
-// TODO: depends on configuration
-
-const localterra = new LocalTerra();
-
-const lcdClientConfig = {
-  localterra: {
-    URL: "http://localhost:1317",
-    chainID: "localterra",
-  },
-};
 
 export default class Deploy extends Command {
   static description = "store code on chain and instantiate";
@@ -38,22 +22,22 @@ export default class Deploy extends Command {
   async run() {
     const { args, flags } = this.parse(Deploy);
 
+    const lcdClientConfig = loadConnections(flags["config-path"]);
     const config = loadConfig(flags["config-path"]);
-
     const conf = config(flags.network, args.contract);
 
     // @ts-ignore
-    const terra = new LCDClient(lcdClientConfig[flags.network]);
+    const terra = new LCDClient(lcdClientConfig(flags.network));
 
-    // TODO: construct this from config instead
     let signer: Wallet;
 
+    const localterra = new LocalTerra();
     if (
       flags.network === "localterra" &&
       flags.signer &&
       localterra.wallets.hasOwnProperty(flags.signer)
     ) {
-      this.log(
+      cli.log(
         `using pre-baked '${flags.signer}' wallet on localterra as signer`
       );
       // @ts-ignore
@@ -62,7 +46,7 @@ export default class Deploy extends Command {
       const keys = loadKeys(path.join(process.cwd(), flags["keys-path"]));
 
       if (!keys[flags.signer]) {
-        cli.error(`Key for '${flags.signer}' does not exists.`);
+        cli.error(`key for '${flags.signer}' does not exists.`);
       }
 
       signer = new Wallet(terra, keys[flags.signer]);
@@ -77,9 +61,6 @@ export default class Deploy extends Command {
       configPath: flags["config-path"],
       lcd: terra,
     });
-
-    // TODO: only allow snake case validation (also in new)
-    // config file: admin, signer,
 
     instantiate({
       conf,
