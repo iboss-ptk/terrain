@@ -15,7 +15,7 @@ export default class Deploy extends Command {
 
   static flags = {
     'no-rebuild': flags.boolean({ default: false }),
-    'network': flags.string({ default: 'local' }),
+    'network': flags.string({ default: 'localterra' }),
     'config': flags.string({ default: './config.terrain.json' }),
     'instance': flags.string({ default: 'default' }),
   }

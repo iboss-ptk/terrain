@@ -16,7 +16,9 @@
                         "uluna": 1000000
                     }
                 },
-                "instantiateMsg": {}
+                "instantiateMsg": {
+                    "count": 0
+                }
             }
         }
     }
