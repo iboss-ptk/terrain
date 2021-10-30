@@ -1,5 +1,4 @@
-terrain
-=======
+# terrain
 
 Terra development environment
 
@@ -9,11 +8,15 @@ Terra development environment
 [![License](https://img.shields.io/npm/l/terrain.svg)](https://github.com/https://github.com/iboss-ptk/terrain/terrain/blob/master/package.json)
 
 <!-- toc -->
-* [Usage](#usage)
-* [Commands](#commands)
+
+- [Usage](#usage)
+- [Commands](#commands)
 <!-- tocstop -->
+
 # Usage
+
 <!-- usage -->
+
 ```sh-session
 $ npm install -g terrain
 $ terrain COMMAND
@@ -25,13 +28,17 @@ USAGE
   $ terrain COMMAND
 ...
 ```
+
 <!-- usagestop -->
+
 # Commands
+
 <!-- commands -->
-* [`terrain deploy CONTRACT`](#terrain-deploy-contract)
-* [`terrain help [COMMAND]`](#terrain-help-command)
-* [`terrain new NAME`](#terrain-new-name)
-* [`terrain sync-config [FILE]`](#terrain-sync-config-file)
+
+- [`terrain deploy CONTRACT`](#terrain-deploy-contract)
+- [`terrain help [COMMAND]`](#terrain-help-command)
+- [`terrain new NAME`](#terrain-new-name)
+- [`terrain sync-config [FILE]`](#terrain-sync-config-file)
 
 ## `terrain deploy CONTRACT`
 
@@ -100,4 +107,5 @@ OPTIONS
 ```
 
 _See code: [src/commands/sync-config.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.0/src/commands/sync-config.ts)_
+
 <!-- commandsstop -->

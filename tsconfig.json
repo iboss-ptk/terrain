@@ -8,8 +8,5 @@
     "strict": true,
     "target": "es2017"
   },
-  "include": [
-    "src/**/*",
-    "babel.config.js"
-  ]
+  "include": ["src/**/*", "babel.config.js"]
 }
