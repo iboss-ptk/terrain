@@ -1,5 +1,7 @@
 import * as R from "ramda";
 import * as fs from "fs-extra";
+import { MnemonicKey, RawKey } from "@terra-money/terra.js";
+import { cli } from "cli-ux";
 
 type Fee = {
   gasLimit: number;
@@ -57,3 +59,20 @@ export const saveConfig = (
 export const loadConfig = (
   path = `${__dirname}/config-template/config.terrain.json`
 ) => config(fs.readJSONSync(path));
+
+export const loadKeys = (
+  path: string = `${__dirname}/config-template/keys.terrain.js`
+): { [keyName: string]: RawKey } => {
+  const keys = require(path);
+  return R.map(
+    (w) =>
+      w.privateKey
+        ? new RawKey(Buffer.from(w.privateKey, "base64"))
+        : w.mnemonic
+        ? new MnemonicKey(w)
+        : cli.error(
+            "Error: Key must be defined with either `privateKey` or `mnemonic`"
+          ),
+    keys
+  );
+};

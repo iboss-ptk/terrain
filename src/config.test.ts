@@ -1,5 +1,6 @@
+import { MnemonicKey, RawKey } from "@terra-money/terra.js";
 import * as R from "ramda";
-import { config, loadConfig } from "./config";
+import { config, loadConfig, loadKeys } from "./config";
 
 const _global = {
   _base: {
@@ -158,7 +159,20 @@ test("load config", () => {
           uluna: 1000000,
         },
       },
-      instantiateMsg: {},
+      instantiateMsg: { count: 0 },
     },
   });
+});
+
+test("load wallets", () => {
+  const wallets = loadKeys();
+  const ct1 = wallets["customtester1"] as MnemonicKey;
+  expect(ct1.mnemonic).toBe(
+    "shiver position copy catalog upset verify cheap library enjoy extend second peasant basic kit polar business document shrug pass chuckle lottery blind ecology stand"
+  );
+
+  const ct2 = wallets["customtester2"] as RawKey;
+  expect(ct2.privateKey.toString("base64")).toBe(
+    "fGl1yNoUnnNUqTUXXhxH9vJU0htlz9lWwBt3fQw+ixw="
+  );
 });
