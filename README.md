@@ -28,22 +28,24 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
-* [`terrain deploy [FILE]`](#terrain-deploy-file)
+* [`terrain deploy CONTRACT`](#terrain-deploy-contract)
 * [`terrain help [COMMAND]`](#terrain-help-command)
 * [`terrain new NAME`](#terrain-new-name)
+* [`terrain sync-config [FILE]`](#terrain-sync-config-file)
 
-## `terrain deploy [FILE]`
+## `terrain deploy CONTRACT`
 
 describe the command here
 
 ```
 USAGE
-  $ terrain deploy [FILE]
+  $ terrain deploy CONTRACT
 
 OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
+  --config=config      [default: ./config.terrain.json]
+  --instance=instance  [default: default]
+  --network=network    [default: localterra]
+  --no-rebuild
 ```
 
 _See code: [src/commands/deploy.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.0/src/commands/deploy.ts)_
@@ -82,4 +84,20 @@ EXAMPLES
 ```
 
 _See code: [src/commands/new.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.0/src/commands/new.ts)_
+
+## `terrain sync-config [FILE]`
+
+describe the command here
+
+```
+USAGE
+  $ terrain sync-config [FILE]
+
+OPTIONS
+  -f, --force
+  -h, --help       show CLI help
+  -n, --name=name  name to print
+```
+
+_See code: [src/commands/sync-config.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.0/src/commands/sync-config.ts)_
 <!-- commandsstop -->

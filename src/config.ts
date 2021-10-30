@@ -44,10 +44,7 @@ export const config = (allConfig: { _global: GlobalConfig, [network: string]: Pa
 
 export const saveConfig = (valuePath: string[], value: string | Object, path: string) => {
     const conf = fs.readJSONSync(path)
-    console.log('conf :', conf)
     const updated = R.set(R.lensPath(valuePath), value, conf)
-
-    console.log('updated :', updated)
     fs.writeJSONSync(path, updated, { spaces: 2 })
 }
 
