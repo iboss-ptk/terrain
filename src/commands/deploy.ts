@@ -11,7 +11,7 @@ import { loadConfig, saveConfig } from '../config'
 const terra = new LocalTerra()
 
 export default class Deploy extends Command {
-  static description = 'describe the command here'
+  static description = 'store code on chain and instantiate'
 
   static flags = {
     'no-rebuild': flags.boolean({ default: false }),
