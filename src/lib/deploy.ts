@@ -37,7 +37,7 @@ export const storeCode = async ({
   }
 
   const wasmByteCode = fs
-    .readFileSync(`artifacts/${contract}.wasm`)
+    .readFileSync(`artifacts/${contract.replace(/-/g, "_")}.wasm`)
     .toString("base64");
 
   cli.action.start("storing wasm bytecode on chain");

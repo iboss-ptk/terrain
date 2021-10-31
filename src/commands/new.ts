@@ -22,12 +22,6 @@ export default class New extends Command {
   async run() {
     const { args, flags } = this.parse(New);
 
-    const isNameSnakeCase = /^[a-z0-9]+(?:_[a-z0-9]+)*$/.test(args.name);
-
-    if (!isNameSnakeCase) {
-      cli.error("name must be snake_case");
-    }
-
     cli.log("generating: ");
     cli.action.start("- contract");
 
@@ -42,7 +36,7 @@ export default class New extends Command {
     process.chdir("contracts");
 
     execSync(
-      `cargo generate --git https://github.com/CosmWasm/cw-template.git --branch 0.16 --name ${args.name}`
+      `cargo generate --git https://github.com/CosmWasm/cw-template.git --branch 0.16 --name counter`
     );
 
     cli.action.stop();
@@ -61,7 +55,7 @@ export default class New extends Command {
           reject(error);
         })
         .pipe(file)
-        .on("finish", function () {
+        .on("finish", () => {
           cli.action.stop();
           resolve(null);
         });
