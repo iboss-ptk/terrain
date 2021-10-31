@@ -1,9 +1,8 @@
 import { Command, flags } from "@oclif/command";
-import { LCDClient, LocalTerra, Wallet } from "@terra-money/terra.js";
-import { loadConfig, loadConnections, loadKeys } from "../config";
+import { LCDClient } from "@terra-money/terra.js";
+import { loadConfig, loadConnections } from "../config";
 import { instantiate, storeCode } from "../lib/deploy";
-import * as path from "path";
-import { cli } from "cli-ux";
+import { getSigner } from "../lib/signer";
 
 export default class Deploy extends Command {
   static description = "store code on chain and instantiate";
@@ -23,35 +22,18 @@ export default class Deploy extends Command {
   async run() {
     const { args, flags } = this.parse(Deploy);
 
-    const lcdClientConfig = loadConnections(flags["config-path"]);
+    const connections = loadConnections(flags["config-path"]);
     const config = loadConfig(flags["config-path"]);
     const conf = config(flags.network, args.contract);
 
     // @ts-ignore
-    const terra = new LCDClient(lcdClientConfig(flags.network));
-
-    let signer: Wallet;
-
-    const localterra = new LocalTerra();
-    if (
-      flags.network === "localterra" &&
-      flags.signer &&
-      localterra.wallets.hasOwnProperty(flags.signer)
-    ) {
-      cli.log(
-        `using pre-baked '${flags.signer}' wallet on localterra as signer`
-      );
-      // @ts-ignore
-      signer = localterra.wallets[flags.signer];
-    } else {
-      const keys = loadKeys(path.join(process.cwd(), flags["keys-path"]));
-
-      if (!keys[flags.signer]) {
-        cli.error(`key for '${flags.signer}' does not exists.`);
-      }
-
-      signer = new Wallet(terra, keys[flags.signer]);
-    }
+    const lcd = new LCDClient(connections(flags.network));
+    const signer = getSigner({
+      network: flags.network,
+      signerId: flags.signer,
+      keysPath: flags["keys-path"],
+      lcd,
+    });
 
     const codeId = await storeCode({
       conf,
@@ -60,7 +42,7 @@ export default class Deploy extends Command {
       signer,
       network: flags.network,
       refsPath: flags["refs-path"],
-      lcd: terra,
+      lcd: lcd,
     });
 
     instantiate({
@@ -71,7 +53,7 @@ export default class Deploy extends Command {
       network: flags.network,
       instanceId: flags["instance-id"],
       refsPath: flags["refs-path"],
-      lcd: terra,
+      lcd: lcd,
     });
   }
 }
