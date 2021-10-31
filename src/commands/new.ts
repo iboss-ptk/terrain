@@ -71,6 +71,10 @@ export default class New extends Command {
       "./config.terrain.json"
     );
     fs.copyFileSync(
+      `${__dirname}/../config-template/refs.terrain.json`,
+      "./refs.terrain.json"
+    );
+    fs.copyFileSync(
       `${__dirname}/../config-template/keys.terrain.js`,
       "./keys.terrain.js"
     );

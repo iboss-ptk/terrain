@@ -6,7 +6,13 @@ import {
   Wallet,
 } from "@terra-money/terra.js";
 import { execSync } from "child_process";
-import { ContractConfig, saveConfig } from "../config";
+import {
+  ContractConfig,
+  loadRefs,
+  saveRefs,
+  setCodeId,
+  setContractAddress,
+} from "../config";
 import * as fs from "fs-extra";
 import { cli } from "cli-ux";
 import * as YAML from "yaml";
@@ -17,7 +23,7 @@ type StoreCodeParams = {
   contract: string;
   signer: Wallet;
   network: string;
-  configPath: string;
+  refsPath: string;
   lcd: LCDClient;
 };
 export const storeCode = async ({
@@ -26,7 +32,7 @@ export const storeCode = async ({
   contract,
   signer,
   network,
-  configPath,
+  refsPath,
   lcd,
 }: StoreCodeParams) => {
   process.chdir(`contracts/${contract}`);
@@ -57,7 +63,9 @@ export const storeCode = async ({
   cli.action.start(`instantiating contract with code id: ${codeId}`);
 
   process.chdir("../..");
-  saveConfig([network, contract, "codeId"], codeId, configPath);
+
+  const updatedRefs = setCodeId(network, contract, codeId)(loadRefs(refsPath));
+  saveRefs(updatedRefs, refsPath);
 
   return codeId;
 };
@@ -69,7 +77,7 @@ type InstantiateParams = {
   codeId: number;
   network: string;
   instanceId: string;
-  configPath: string;
+  refsPath: string;
   lcd: LCDClient;
 };
 
@@ -80,7 +88,7 @@ export const instantiate = async ({
   codeId,
   network,
   instanceId,
-  configPath,
+  refsPath,
   lcd,
 }: InstantiateParams) => {
   const instantiation = conf.instantiation;
@@ -109,11 +117,13 @@ export const instantiate = async ({
       (attr: { key: string }) => attr.key === "contract_address"
     ).value;
 
-  saveConfig(
-    [network, contract, "contractAddresses", instanceId],
-    contractAddress,
-    configPath
-  );
+  const updatedRefs = setContractAddress(
+    network,
+    contract,
+    instanceId,
+    contractAddress
+  )(loadRefs(refsPath));
+  saveRefs(updatedRefs, refsPath);
 
   cli.log(YAML.stringify(log));
 };

@@ -12,6 +12,7 @@ export default class Deploy extends Command {
     "no-rebuild": flags.boolean({ default: false }),
     network: flags.string({ default: "localterra" }),
     "config-path": flags.string({ default: "./config.terrain.json" }),
+    "refs-path": flags.string({ default: "./refs.terrain.json" }),
     "keys-path": flags.string({ default: "./keys.terrain.js" }),
     "instance-id": flags.string({ default: "default" }),
     signer: flags.string({ required: true }),
@@ -58,7 +59,7 @@ export default class Deploy extends Command {
       contract: args.contract,
       signer,
       network: flags.network,
-      configPath: flags["config-path"],
+      refsPath: flags["refs-path"],
       lcd: terra,
     });
 
@@ -69,7 +70,7 @@ export default class Deploy extends Command {
       codeId,
       network: flags.network,
       instanceId: flags["instance-id"],
-      configPath: flags["config-path"],
+      refsPath: flags["refs-path"],
       lcd: terra,
     });
   }

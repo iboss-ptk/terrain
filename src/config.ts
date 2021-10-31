@@ -11,10 +11,6 @@ type Fee = {
 export type ContractConfig = {
   store: { fee: Fee };
   instantiation: { fee: Fee; instantiateMsg: Record<string, any> };
-  codeId?: number;
-  contractAddresses?: {
-    [key: string]: string;
-  };
 };
 
 type Config = {
@@ -24,6 +20,19 @@ type Config = {
 type GlobalConfig = {
   _base: ContractConfig;
   [contract: string]: ContractConfig;
+};
+
+type ContractRef = {
+  codeId: number;
+  contractAddresses: {
+    [key: string]: string;
+  };
+};
+
+type Refs = {
+  [network: string]: {
+    [contract: string]: ContractRef;
+  };
 };
 
 export const connection =
@@ -86,4 +95,26 @@ export const loadKeys = (
           ),
     keys
   );
+};
+
+export const setCodeId = (network: string, contract: string, codeId: number) =>
+  R.set(R.lensPath([network, contract, "codeId"]), codeId);
+
+export const setContractAddress = (
+  network: string,
+  contract: string,
+  instanceId: string,
+  contractAddress: string
+) =>
+  R.set(
+    R.lensPath([network, contract, "contractAddresses", instanceId]),
+    contractAddress
+  );
+
+export const loadRefs = (
+  path = `${__dirname}/config-template/refs.terrain.json`
+): Refs => fs.readJSONSync(path);
+
+export const saveRefs = (refs: Refs, path: string) => {
+  fs.writeJSONSync(path, refs, { spaces: 2 });
 };
