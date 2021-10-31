@@ -1,7 +1,7 @@
 {
-  "name": "terrain",
+  "name": "@iboss/terrain",
   "description": "Terra development environment",
-  "version": "0.0.0",
+  "version": "0.0.2",
   "author": "Supanat Potiwarakorn @iboss-ptk",
   "bin": {
     "terrain": "./bin/run"
@@ -16,7 +16,7 @@
     "@types/fs-extra": "^9.0.13",
     "@types/jest": "^27.0.2",
     "@types/node": "^10.17.60",
-    "@types/ramda": "^0.27.46",
+    "@types/ramda": "^0.26.0",
     "@types/superagent": "^4.1.13",
     "babel-jest": "^27.3.1",
     "eslint": "^5.16.0",
@@ -55,7 +55,7 @@
     "postpack": "rm -f oclif.manifest.json",
     "posttest": "eslint . --ext .ts --config .eslintrc",
     "fixlint": "eslint . --ext .ts --config .eslintrc --fix",
-    "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
+    "prepack": "rm -rf lib && tsc -b && cp -R src/config-template lib/config-template && oclif-dev manifest && oclif-dev readme",
     "test": "jest",
     "test:watch": "jest --watch",
     "version": "oclif-dev readme && git add README.md"

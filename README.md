@@ -17,11 +17,11 @@ Terra development environment
 
 <!-- usage -->
 ```sh-session
-$ npm install -g terrain
+$ npm install -g @iboss/terrain
 $ terrain COMMAND
 running command...
 $ terrain (-v|--version|version)
-terrain/0.0.0 darwin-x64 node-v15.11.0
+@iboss/terrain/0.0.2 darwin-x64 node-v15.11.0
 $ terrain --help [COMMAND]
 USAGE
   $ terrain COMMAND
@@ -33,7 +33,7 @@ USAGE
 
 <!-- commands -->
 * [`terrain deploy CONTRACT`](#terrain-deploy-contract)
-* [`terrain gen [FILE]`](#terrain-gen-file)
+* [`terrain gen [NAME]`](#terrain-gen-name)
 * [`terrain help [COMMAND]`](#terrain-help-command)
 * [`terrain instantiate CONTRACT`](#terrain-instantiate-contract)
 * [`terrain new NAME`](#terrain-new-name)
@@ -59,23 +59,22 @@ OPTIONS
   --signer=signer            (required)
 ```
 
-_See code: [src/commands/deploy.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.0/src/commands/deploy.ts)_
+_See code: [src/commands/deploy.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.2/src/commands/deploy.ts)_
 
-## `terrain gen [FILE]`
+## `terrain gen [NAME]`
 
-describe the command here
+generate new contract
 
 ```
 USAGE
-  $ terrain gen [FILE]
+  $ terrain gen [NAME]
 
 OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
+  --path=path        [default: ./contracts] path to keep the contracts
+  --version=version  [default: 0.16]
 ```
 
-_See code: [src/commands/gen.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.0/src/commands/gen.ts)_
+_See code: [src/commands/gen.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.2/src/commands/gen.ts)_
 
 ## `terrain help [COMMAND]`
 
@@ -113,7 +112,7 @@ OPTIONS
   --signer=signer            (required)
 ```
 
-_See code: [src/commands/instantiate.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.0/src/commands/instantiate.ts)_
+_See code: [src/commands/instantiate.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.2/src/commands/instantiate.ts)_
 
 ## `terrain new NAME`
 
@@ -124,14 +123,15 @@ USAGE
   $ terrain new NAME
 
 OPTIONS
-  --path=path  path to keep the project
+  --path=path        path to keep the project
+  --version=version  [default: 0.16]
 
 EXAMPLES
   $ terrain new awesome-dapp
   $ terrain new awesome-dapp --path path/to/dapp
 ```
 
-_See code: [src/commands/new.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.0/src/commands/new.ts)_
+_See code: [src/commands/new.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.2/src/commands/new.ts)_
 
 ## `terrain store-code CONTRACT`
 
@@ -150,7 +150,7 @@ OPTIONS
   --signer=signer            (required)
 ```
 
-_See code: [src/commands/store-code.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.0/src/commands/store-code.ts)_
+_See code: [src/commands/store-code.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.2/src/commands/store-code.ts)_
 
 ## `terrain sync-refs [FILE]`
 
@@ -165,5 +165,5 @@ OPTIONS
   --refs-path=refs-path  [default: ./refs.terrain.json]
 ```
 
-_See code: [src/commands/sync-refs.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.0/src/commands/sync-refs.ts)_
+_See code: [src/commands/sync-refs.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.2/src/commands/sync-refs.ts)_
 <!-- commandsstop -->
