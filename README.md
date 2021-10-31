@@ -33,8 +33,9 @@ USAGE
 
 <!-- commands -->
 * [`terrain deploy CONTRACT`](#terrain-deploy-contract)
+* [`terrain gen [FILE]`](#terrain-gen-file)
 * [`terrain help [COMMAND]`](#terrain-help-command)
-* [`terrain instantiate [FILE]`](#terrain-instantiate-file)
+* [`terrain instantiate CONTRACT`](#terrain-instantiate-contract)
 * [`terrain new NAME`](#terrain-new-name)
 * [`terrain store-code CONTRACT`](#terrain-store-code-contract)
 * [`terrain sync-refs [FILE]`](#terrain-sync-refs-file)
@@ -54,10 +55,27 @@ OPTIONS
   --network=network          [default: localterra]
   --no-rebuild
   --refs-path=refs-path      [default: ./refs.terrain.json]
+  --set-signer-as-admin
   --signer=signer            (required)
 ```
 
 _See code: [src/commands/deploy.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.0/src/commands/deploy.ts)_
+
+## `terrain gen [FILE]`
+
+describe the command here
+
+```
+USAGE
+  $ terrain gen [FILE]
+
+OPTIONS
+  -f, --force
+  -h, --help       show CLI help
+  -n, --name=name  name to print
+```
+
+_See code: [src/commands/gen.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.0/src/commands/gen.ts)_
 
 ## `terrain help [COMMAND]`
 
@@ -76,18 +94,23 @@ OPTIONS
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.3/src/commands/help.ts)_
 
-## `terrain instantiate [FILE]`
+## `terrain instantiate CONTRACT`
 
-describe the command here
+instantiate contract
 
 ```
 USAGE
-  $ terrain instantiate [FILE]
+  $ terrain instantiate CONTRACT
 
 OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
+  --code-id=code-id
+  --config-path=config-path  [default: ./config.terrain.json]
+  --instance-id=instance-id  [default: default]
+  --keys-path=keys-path      [default: ./keys.terrain.js]
+  --network=network          [default: localterra]
+  --refs-path=refs-path      [default: ./refs.terrain.json]
+  --set-signer-as-admin
+  --signer=signer            (required)
 ```
 
 _See code: [src/commands/instantiate.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.0/src/commands/instantiate.ts)_

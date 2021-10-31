@@ -15,6 +15,9 @@ export default class New extends Command {
 
   static flags = {
     path: flags.string({ description: "path to keep the project" }),
+    version: flags.string({
+      default: "0.16",
+    }),
   };
 
   static args = [{ name: "name", required: true }];
@@ -36,7 +39,7 @@ export default class New extends Command {
     process.chdir("contracts");
 
     execSync(
-      `cargo generate --git https://github.com/CosmWasm/cw-template.git --branch 0.16 --name counter`
+      `cargo generate --git https://github.com/CosmWasm/cw-template.git --branch ${flags.version} --name ${args.name}`
     );
 
     cli.action.stop();
