@@ -8,15 +8,14 @@ Terra development environment
 [![License](https://img.shields.io/npm/l/terrain.svg)](https://github.com/https://github.com/iboss-ptk/terrain/terrain/blob/master/package.json)
 
 <!-- toc -->
-
-- [Usage](#usage)
-- [Commands](#commands)
+* [terrain](#terrain)
+* [Usage](#usage)
+* [Commands](#commands)
 <!-- tocstop -->
 
 # Usage
 
 <!-- usage -->
-
 ```sh-session
 $ npm install -g terrain
 $ terrain COMMAND
@@ -28,31 +27,34 @@ USAGE
   $ terrain COMMAND
 ...
 ```
-
 <!-- usagestop -->
 
 # Commands
 
 <!-- commands -->
-
-- [`terrain deploy CONTRACT`](#terrain-deploy-contract)
-- [`terrain help [COMMAND]`](#terrain-help-command)
-- [`terrain new NAME`](#terrain-new-name)
-- [`terrain sync-config [FILE]`](#terrain-sync-config-file)
+* [`terrain deploy CONTRACT`](#terrain-deploy-contract)
+* [`terrain help [COMMAND]`](#terrain-help-command)
+* [`terrain instantiate [FILE]`](#terrain-instantiate-file)
+* [`terrain new NAME`](#terrain-new-name)
+* [`terrain store-code CONTRACT`](#terrain-store-code-contract)
+* [`terrain sync-refs [FILE]`](#terrain-sync-refs-file)
 
 ## `terrain deploy CONTRACT`
 
-describe the command here
+store code on chain and instantiate
 
 ```
 USAGE
   $ terrain deploy CONTRACT
 
 OPTIONS
-  --config=config      [default: ./config.terrain.json]
-  --instance=instance  [default: default]
-  --network=network    [default: localterra]
+  --config-path=config-path  [default: ./config.terrain.json]
+  --instance-id=instance-id  [default: default]
+  --keys-path=keys-path      [default: ./keys.terrain.js]
+  --network=network          [default: localterra]
   --no-rebuild
+  --refs-path=refs-path      [default: ./refs.terrain.json]
+  --signer=signer            (required)
 ```
 
 _See code: [src/commands/deploy.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.0/src/commands/deploy.ts)_
@@ -74,6 +76,22 @@ OPTIONS
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.3/src/commands/help.ts)_
 
+## `terrain instantiate [FILE]`
+
+describe the command here
+
+```
+USAGE
+  $ terrain instantiate [FILE]
+
+OPTIONS
+  -f, --force
+  -h, --help       show CLI help
+  -n, --name=name  name to print
+```
+
+_See code: [src/commands/instantiate.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.0/src/commands/instantiate.ts)_
+
 ## `terrain new NAME`
 
 create new dapp from template
@@ -92,20 +110,37 @@ EXAMPLES
 
 _See code: [src/commands/new.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.0/src/commands/new.ts)_
 
-## `terrain sync-config [FILE]`
+## `terrain store-code CONTRACT`
 
-describe the command here
+store code on chain
 
 ```
 USAGE
-  $ terrain sync-config [FILE]
+  $ terrain store-code CONTRACT
 
 OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
+  --config-path=config-path  [default: ./config.terrain.json]
+  --keys-path=keys-path      [default: ./keys.terrain.js]
+  --network=network          [default: localterra]
+  --no-rebuild
+  --refs-path=refs-path      [default: ./refs.terrain.json]
+  --signer=signer            (required)
 ```
 
-_See code: [src/commands/sync-config.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.0/src/commands/sync-config.ts)_
+_See code: [src/commands/store-code.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.0/src/commands/store-code.ts)_
 
+## `terrain sync-refs [FILE]`
+
+sync configuration with frontend app
+
+```
+USAGE
+  $ terrain sync-refs [FILE]
+
+OPTIONS
+  --dest=dest            [default: ./frontend/src/refs.terrain.json]
+  --refs-path=refs-path  [default: ./refs.terrain.json]
+```
+
+_See code: [src/commands/sync-refs.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.0/src/commands/sync-refs.ts)_
 <!-- commandsstop -->

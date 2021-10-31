@@ -60,12 +60,12 @@ export const storeCode = async ({
     .events.find((msg: { type: string }) => msg.type === "store_code")
     .attributes.find((attr: { key: string }) => attr.key === "code_id").value;
 
-  cli.action.start(`instantiating contract with code id: ${codeId}`);
-
   process.chdir("../..");
 
   const updatedRefs = setCodeId(network, contract, codeId)(loadRefs(refsPath));
   saveRefs(updatedRefs, refsPath);
+
+  cli.log(`code is stored at code id: ${codeId}`);
 
   return codeId;
 };
@@ -93,6 +93,8 @@ export const instantiate = async ({
 }: InstantiateParams) => {
   const instantiation = conf.instantiation;
 
+  cli.action.start(`instantiating contract with code id: ${codeId}`);
+
   const instantiateTx = await signer.createAndSignTx({
     msgs: [
       new MsgInstantiateContract(
@@ -106,10 +108,17 @@ export const instantiate = async ({
   });
 
   const resInstant = await lcd.tx.broadcast(instantiateTx);
+  console.log(resInstant);
+
+  let log = [];
+  try {
+    log = JSON.parse(resInstant.raw_log);
+  } catch (e) {
+    cli.action.stop();
+    cli.error(resInstant.raw_log);
+  }
 
   cli.action.stop();
-
-  const log = JSON.parse(resInstant.raw_log);
 
   const contractAddress = log[0].events
     .find((event: { type: string }) => event.type === "instantiate_contract")
