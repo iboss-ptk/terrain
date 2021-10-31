@@ -13,7 +13,7 @@ export const getSigner = ({
   signerId: string;
   keysPath: string;
   lcd: LCDClient;
-}) => {
+}): Wallet => {
   const localterra = new LocalTerra();
   if (network === "localterra" && localterra.wallets.hasOwnProperty(signerId)) {
     cli.log(`using pre-baked '${signerId}' wallet on localterra as signer`);

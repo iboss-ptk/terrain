@@ -1,8 +1,7 @@
 import { Command, flags } from "@oclif/command";
 import { LCDClient } from "@terra-money/terra.js";
-import { cli } from "cli-ux";
 import { loadConfig, loadConnections, loadRefs } from "../config";
-import { instantiate } from "../lib/deploy";
+import { instantiate } from "../lib/deployment";
 import { getSigner } from "../lib/signer";
 
 export default class Instantiate extends Command {
@@ -16,6 +15,7 @@ export default class Instantiate extends Command {
     "instance-id": flags.string({ default: "default" }),
     signer: flags.string({ required: true }),
     "code-id": flags.integer(),
+    "set-signer-as-admin": flags.boolean({ default: false }),
   };
 
   static args = [{ name: "contract", required: true }];
@@ -40,9 +40,14 @@ export default class Instantiate extends Command {
       flags["code-id"] ||
       loadRefs(flags["refs-path"])[flags.network][args.contract].codeId;
 
+    const admin = flags["set-signer-as-admin"]
+      ? signer.key.accAddress
+      : undefined;
+
     instantiate({
       conf,
       signer,
+      admin,
       contract: args.contract,
       codeId,
       network: flags.network,

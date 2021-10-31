@@ -1,6 +1,11 @@
 import * as R from "ramda";
 import * as fs from "fs-extra";
-import { LCDClientConfig, MnemonicKey, RawKey } from "@terra-money/terra.js";
+import {
+  AccAddress,
+  LCDClientConfig,
+  MnemonicKey,
+  RawKey,
+} from "@terra-money/terra.js";
 import { cli } from "cli-ux";
 
 type Fee = {
@@ -10,7 +15,10 @@ type Fee = {
 
 export type ContractConfig = {
   store: { fee: Fee };
-  instantiation: { fee: Fee; instantiateMsg: Record<string, any> };
+  instantiation: {
+    fee: Fee;
+    instantiateMsg: Record<string, any>;
+  };
 };
 
 type Config = {

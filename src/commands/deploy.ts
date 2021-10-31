@@ -1,7 +1,7 @@
 import { Command, flags } from "@oclif/command";
 import { LCDClient } from "@terra-money/terra.js";
 import { loadConfig, loadConnections } from "../config";
-import { instantiate, storeCode } from "../lib/deploy";
+import { instantiate, storeCode } from "../lib/deployment";
 import { getSigner } from "../lib/signer";
 
 export default class Deploy extends Command {
@@ -15,6 +15,7 @@ export default class Deploy extends Command {
     "keys-path": flags.string({ default: "./keys.terrain.js" }),
     "instance-id": flags.string({ default: "default" }),
     signer: flags.string({ required: true }),
+    "set-signer-as-admin": flags.boolean({ default: false }),
   };
 
   static args = [{ name: "contract", required: true }];
@@ -45,9 +46,14 @@ export default class Deploy extends Command {
       lcd: lcd,
     });
 
+    const admin = flags["set-signer-as-admin"]
+      ? signer.key.accAddress
+      : undefined;
+
     instantiate({
       conf,
       signer,
+      admin,
       contract: args.contract,
       codeId,
       network: flags.network,

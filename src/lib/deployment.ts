@@ -1,4 +1,5 @@
 import {
+  AccAddress,
   Fee,
   LCDClient,
   MsgInstantiateContract,
@@ -73,6 +74,7 @@ export const storeCode = async ({
 type InstantiateParams = {
   conf: ContractConfig;
   signer: Wallet;
+  admin?: AccAddress;
   contract: string;
   codeId: number;
   network: string;
@@ -84,6 +86,7 @@ type InstantiateParams = {
 export const instantiate = async ({
   conf,
   signer,
+  admin,
   contract,
   codeId,
   network,
@@ -99,7 +102,7 @@ export const instantiate = async ({
     msgs: [
       new MsgInstantiateContract(
         signer.key.accAddress,
-        undefined, // can migrate
+        admin, // can migrate
         codeId,
         instantiation.instantiateMsg
       ),

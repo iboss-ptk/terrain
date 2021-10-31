@@ -1,7 +1,7 @@
 import { Command, flags } from "@oclif/command";
 import { LCDClient } from "@terra-money/terra.js";
 import { loadConfig, loadConnections } from "../config";
-import { storeCode } from "../lib/deploy";
+import { storeCode } from "../lib/deployment";
 import { getSigner } from "../lib/signer";
 
 export default class StoreCode extends Command {
