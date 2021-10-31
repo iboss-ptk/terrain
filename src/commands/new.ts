@@ -39,7 +39,7 @@ export default class New extends Command {
     process.chdir("contracts");
 
     execSync(
-      `cargo generate --git https://github.com/CosmWasm/cw-template.git --branch ${flags.version} --name ${args.name}`
+      `cargo generate --git https://github.com/CosmWasm/cw-template.git --branch ${flags.version} --name counter`
     );
 
     cli.action.stop();
