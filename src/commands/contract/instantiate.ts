@@ -1,27 +1,27 @@
 import {Command, flags} from '@oclif/command'
 import {LCDClient} from '@terra-money/terra.js'
-import {loadConfig, loadConnections} from '../config'
-import {instantiate, storeCode} from '../lib/deployment'
-import {getSigner} from '../lib/signer'
+import {loadConfig, loadConnections, loadRefs} from '../../config'
+import {instantiate} from '../../lib/deployment'
+import {getSigner} from '../../lib/signer'
 
-export default class Deploy extends Command {
-  static description = 'store code on chain and instantiate';
+export default class Instantiate extends Command {
+  static description = 'instantiate contract';
 
   static flags = {
-    'no-rebuild': flags.boolean({default: false}),
     network: flags.string({default: 'localterra'}),
     'config-path': flags.string({default: './config.terrain.json'}),
     'refs-path': flags.string({default: './refs.terrain.json'}),
     'keys-path': flags.string({default: './keys.terrain.js'}),
     'instance-id': flags.string({default: 'default'}),
     signer: flags.string({required: true}),
+    'code-id': flags.integer(),
     'set-signer-as-admin': flags.boolean({default: false}),
   };
 
   static args = [{name: 'contract', required: true}];
 
   async run() {
-    const {args, flags} = this.parse(Deploy)
+    const {args, flags} = this.parse(Instantiate)
 
     const connections = loadConnections(flags['config-path'])
     const config = loadConfig(flags['config-path'])
@@ -36,15 +36,9 @@ export default class Deploy extends Command {
       lcd,
     })
 
-    const codeId = await storeCode({
-      conf,
-      noRebuild: flags['no-rebuild'],
-      contract: args.contract,
-      signer,
-      network: flags.network,
-      refsPath: flags['refs-path'],
-      lcd: lcd,
-    })
+    const codeId =
+      flags['code-id'] ||
+      loadRefs(flags['refs-path'])[flags.network][args.contract].codeId
 
     const admin = flags['set-signer-as-admin'] ?
       signer.key.accAddress :

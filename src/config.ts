@@ -1,11 +1,6 @@
 import * as R from "ramda";
 import * as fs from "fs-extra";
-import {
-  AccAddress,
-  LCDClientConfig,
-  MnemonicKey,
-  RawKey,
-} from "@terra-money/terra.js";
+import { LCDClientConfig, MnemonicKey, RawKey } from "@terra-money/terra.js";
 import { cli } from "cli-ux";
 
 type Fee = {
@@ -89,7 +84,7 @@ export const loadConfig = (
 ) => config(fs.readJSONSync(path));
 
 export const loadKeys = (
-  path: string = `${__dirname}/config-template/keys.terrain.js`
+  path = `${__dirname}/config-template/keys.terrain.js`
 ): { [keyName: string]: RawKey } => {
   const keys = require(path);
   return R.map(

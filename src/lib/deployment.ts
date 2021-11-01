@@ -111,12 +111,11 @@ export const instantiate = async ({
   });
 
   const resInstant = await lcd.tx.broadcast(instantiateTx);
-  console.log(resInstant);
 
   let log = [];
   try {
     log = JSON.parse(resInstant.raw_log);
-  } catch (e) {
+  } catch (error) {
     cli.action.stop();
     cli.error(resInstant.raw_log);
   }

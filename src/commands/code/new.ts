@@ -2,7 +2,7 @@ import { Command, flags } from "@oclif/command";
 import { execSync } from "child_process";
 import { cli } from "cli-ux";
 
-export default class Gen extends Command {
+export default class New extends Command {
   static description = "generate new contract";
 
   static flags = {
@@ -18,7 +18,7 @@ export default class Gen extends Command {
   static args = [{ name: "name" }];
 
   async run() {
-    const { args, flags } = this.parse(Gen);
+    const { args, flags } = this.parse(New);
 
     process.chdir(flags.path);
 

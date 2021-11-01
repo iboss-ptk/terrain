@@ -15,17 +15,19 @@ export const getSigner = ({
   lcd: LCDClient;
 }): Wallet => {
   const localterra = new LocalTerra();
-  if (network === "localterra" && localterra.wallets.hasOwnProperty(signerId)) {
+  if (
+    network === "localterra" &&
+    Object.prototype.hasOwnProperty.call(localterra.wallets, signerId)
+  ) {
     cli.log(`using pre-baked '${signerId}' wallet on localterra as signer`);
     // @ts-ignore
     return localterra.wallets[signerId];
-  } else {
-    const keys = loadKeys(path.join(process.cwd(), keysPath));
-
-    if (!keys[signerId]) {
-      cli.error(`key for '${signerId}' does not exists.`);
-    }
-
-    return new Wallet(lcd, keys[signerId]);
   }
+  const keys = loadKeys(path.join(process.cwd(), keysPath));
+
+  if (!keys[signerId]) {
+    cli.error(`key for '${signerId}' does not exists.`);
+  }
+
+  return new Wallet(lcd, keys[signerId]);
 };
