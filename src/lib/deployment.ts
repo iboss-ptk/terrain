@@ -3,6 +3,7 @@ import {
   Fee,
   LCDClient,
   MsgInstantiateContract,
+  MsgMigrateCode,
   MsgStoreCode,
   Wallet,
 } from "@terra-money/terra.js";
@@ -26,6 +27,7 @@ type StoreCodeParams = {
   network: string;
   refsPath: string;
   lcd: LCDClient;
+  codeId?: number;
 };
 export const storeCode = async ({
   conf,
@@ -35,6 +37,7 @@ export const storeCode = async ({
   network,
   refsPath,
   lcd,
+  codeId,
 }: StoreCodeParams) => {
   process.chdir(`contracts/${contract}`);
 
@@ -51,24 +54,40 @@ export const storeCode = async ({
 
   const store = conf.store;
   const storeCodeTx = await signer.createAndSignTx({
-    msgs: [new MsgStoreCode(signer.key.accAddress, wasmByteCode)],
+    msgs: [
+      typeof codeId !== "undefined"
+        ? new MsgMigrateCode(signer.key.accAddress, codeId, wasmByteCode)
+        : new MsgStoreCode(signer.key.accAddress, wasmByteCode),
+    ],
     fee: new Fee(store.fee.gasLimit, store.fee.amount),
   });
 
   const res = await lcd.tx.broadcast(storeCodeTx);
   cli.action.stop();
-  const codeId = JSON.parse(res.raw_log)[0]
-    .events.find((msg: { type: string }) => msg.type === "store_code")
-    .attributes.find((attr: { key: string }) => attr.key === "code_id").value;
 
-  process.chdir("../..");
+  try {
+    const savedCodeId = JSON.parse(res.raw_log)[0]
+      .events.find((msg: { type: string }) => msg.type === "store_code")
+      .attributes.find((attr: { key: string }) => attr.key === "code_id").value;
 
-  const updatedRefs = setCodeId(network, contract, codeId)(loadRefs(refsPath));
-  saveRefs(updatedRefs, refsPath);
+    process.chdir("../..");
+    const updatedRefs = setCodeId(
+      network,
+      contract,
+      savedCodeId
+    )(loadRefs(refsPath));
+    console.log("SET DONE++++++++++++++");
+    saveRefs(updatedRefs, refsPath);
+    cli.log(`code is stored at code id: ${savedCodeId}`);
 
-  cli.log(`code is stored at code id: ${codeId}`);
-
-  return codeId;
+    return savedCodeId;
+  } catch (error) {
+    if (error instanceof SyntaxError) {
+      cli.error(res.raw_log);
+    } else {
+      cli.error(`Unexpcted Error: ${error}`);
+    }
+  }
 };
 
 type InstantiateParams = {
@@ -117,7 +136,11 @@ export const instantiate = async ({
     log = JSON.parse(resInstant.raw_log);
   } catch (error) {
     cli.action.stop();
-    cli.error(resInstant.raw_log);
+    if (error instanceof SyntaxError) {
+      cli.error(resInstant.raw_log);
+    } else {
+      cli.error(`Unexpcted Error: ${error}`);
+    }
   }
 
   cli.action.stop();
