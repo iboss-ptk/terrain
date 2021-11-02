@@ -16,7 +16,7 @@ export default class ContractInstantiate extends Command {
     signer: flags.string({ required: true }),
     "code-id": flags.integer({
       description:
-        "target code id for migration, can do only once after columbus-5 upgrade on mainnet",
+        "target code id for migration, can do only once after columbus-5 upgrade",
     }),
     "set-signer-as-admin": flags.boolean({ default: false }),
   };
