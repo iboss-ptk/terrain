@@ -32,30 +32,14 @@ USAGE
 # Commands
 
 <!-- commands -->
-* [`terrain code:migrate [FILE]`](#terrain-codemigrate-file)
 * [`terrain code:new [NAME]`](#terrain-codenew-name)
 * [`terrain code:store CONTRACT`](#terrain-codestore-contract)
 * [`terrain contract:instantiate CONTRACT`](#terrain-contractinstantiate-contract)
+* [`terrain contract:migrate [FILE]`](#terrain-contractmigrate-file)
 * [`terrain deploy CONTRACT`](#terrain-deploy-contract)
 * [`terrain help [COMMAND]`](#terrain-help-command)
 * [`terrain new NAME`](#terrain-new-name)
 * [`terrain sync-refs [FILE]`](#terrain-sync-refs-file)
-
-## `terrain code:migrate [FILE]`
-
-describe the command here
-
-```
-USAGE
-  $ terrain code:migrate [FILE]
-
-OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
-```
-
-_See code: [src/commands/code/migrate.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.3/src/commands/code/migrate.ts)_
 
 ## `terrain code:new [NAME]`
 
@@ -81,6 +65,7 @@ USAGE
   $ terrain code:store CONTRACT
 
 OPTIONS
+  --code-id=code-id
   --config-path=config-path  [default: ./config.terrain.json]
   --keys-path=keys-path      [default: ./keys.terrain.js]
   --network=network          [default: localterra]
@@ -100,7 +85,7 @@ USAGE
   $ terrain contract:instantiate CONTRACT
 
 OPTIONS
-  --code-id=code-id
+  --code-id=code-id          target code id for migration, can do only once after columbus-5 upgrade
   --config-path=config-path  [default: ./config.terrain.json]
   --instance-id=instance-id  [default: default]
   --keys-path=keys-path      [default: ./keys.terrain.js]
@@ -112,6 +97,22 @@ OPTIONS
 
 _See code: [src/commands/contract/instantiate.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.3/src/commands/contract/instantiate.ts)_
 
+## `terrain contract:migrate [FILE]`
+
+describe the command here
+
+```
+USAGE
+  $ terrain contract:migrate [FILE]
+
+OPTIONS
+  -f, --force
+  -h, --help       show CLI help
+  -n, --name=name  name to print
+```
+
+_See code: [src/commands/contract/migrate.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.3/src/commands/contract/migrate.ts)_
+
 ## `terrain deploy CONTRACT`
 
 store code on chain and instantiate
@@ -121,14 +122,15 @@ USAGE
   $ terrain deploy CONTRACT
 
 OPTIONS
-  --config-path=config-path  [default: ./config.terrain.json]
-  --instance-id=instance-id  [default: default]
-  --keys-path=keys-path      [default: ./keys.terrain.js]
-  --network=network          [default: localterra]
+  --admin-address=admin-address
+  --config-path=config-path      [default: ./config.terrain.json]
+  --instance-id=instance-id      [default: default]
+  --keys-path=keys-path          [default: ./keys.terrain.js]
+  --network=network              [default: localterra]
   --no-rebuild
-  --refs-path=refs-path      [default: ./refs.terrain.json]
+  --refs-path=refs-path          [default: ./refs.terrain.json]
   --set-signer-as-admin
-  --signer=signer            (required)
+  --signer=signer                (required)
 ```
 
 _See code: [src/commands/deploy.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.3/src/commands/deploy.ts)_

@@ -4,6 +4,7 @@ import {
   LCDClient,
   MsgInstantiateContract,
   MsgMigrateCode,
+  MsgMigrateContract,
   MsgStoreCode,
   Wallet,
 } from "@terra-money/terra.js";
@@ -76,7 +77,6 @@ export const storeCode = async ({
       contract,
       savedCodeId
     )(loadRefs(refsPath));
-    console.log("SET DONE++++++++++++++");
     saveRefs(updatedRefs, refsPath);
     cli.log(`code is stored at code id: ${savedCodeId}`);
 
@@ -150,6 +150,79 @@ export const instantiate = async ({
     .attributes.find(
       (attr: { key: string }) => attr.key === "contract_address"
     ).value;
+
+  const updatedRefs = setContractAddress(
+    network,
+    contract,
+    instanceId,
+    contractAddress
+  )(loadRefs(refsPath));
+  saveRefs(updatedRefs, refsPath);
+
+  cli.log(YAML.stringify(log));
+};
+
+type MigrateParams = {
+  conf: ContractConfig;
+  signer: Wallet;
+  contract: string;
+  codeId: number;
+  network: string;
+  instanceId: string;
+  refsPath: string;
+  lcd: LCDClient;
+};
+
+export const migrate = async ({
+  conf,
+  signer,
+  contract,
+  codeId,
+  network,
+  instanceId,
+  refsPath,
+  lcd,
+}: MigrateParams) => {
+  const instantiation = conf.instantiation;
+
+  cli.action.start(`instantiating contract with code id: ${codeId}`);
+  const refs = loadRefs(refsPath);
+
+  const contractAddress = refs[network][contract].contractAddresses[instanceId];
+
+  const instantiateTx = await signer.createAndSignTx({
+    msgs: [
+      new MsgMigrateContract(
+        signer.key.accAddress,
+        contractAddress,
+        codeId,
+        instantiation.instantiateMsg
+      ),
+    ],
+    fee: new Fee(instantiation.fee.gasLimit, instantiation.fee.amount),
+  });
+
+  const resInstant = await lcd.tx.broadcast(instantiateTx);
+
+  let log = [];
+  try {
+    log = JSON.parse(resInstant.raw_log);
+  } catch (error) {
+    cli.action.stop();
+    if (error instanceof SyntaxError) {
+      cli.error(resInstant.raw_log);
+    } else {
+      cli.error(`Unexpcted Error: ${error}`);
+    }
+  }
+
+  cli.action.stop();
+
+  // const contractAddress = log[0].events
+  //   .find((event: { type: string }) => event.type === "instantiate_contract")
+  //   .attributes.find(
+  //     (attr: { key: string }) => attr.key === "contract_address"
+  //   ).value;
 
   const updatedRefs = setContractAddress(
     network,
