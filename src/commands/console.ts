@@ -30,7 +30,7 @@ export default class Console extends Command {
     // for repl server
     const { config, refs, wallets, client } = env;
 
-    const r = repl.start({ prompt: "terrain > ", useColors: true });
+    const r = repl.start({ prompt: "terrain> ", useColors: true });
 
     const def = (name: string, value: any) =>
       Object.defineProperty(r.context, name, {
