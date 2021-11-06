@@ -21,7 +21,7 @@ $ npm install -g @iboss/terrain
 $ terrain COMMAND
 running command...
 $ terrain (-v|--version|version)
-@iboss/terrain/0.0.4 darwin-x64 node-v17.0.1
+@iboss/terrain/0.0.5 darwin-x64 node-v17.0.1
 $ terrain --help [COMMAND]
 USAGE
   $ terrain COMMAND
@@ -57,7 +57,7 @@ OPTIONS
   --version=version  [default: 0.16]
 ```
 
-_See code: [src/commands/code/new.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.4/src/commands/code/new.ts)_
+_See code: [src/commands/code/new.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.5/src/commands/code/new.ts)_
 
 ## `terrain code:store CONTRACT`
 
@@ -77,7 +77,7 @@ OPTIONS
   --signer=signer            (required)
 ```
 
-_See code: [src/commands/code/store.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.4/src/commands/code/store.ts)_
+_See code: [src/commands/code/store.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.5/src/commands/code/store.ts)_
 
 ## `terrain console`
 
@@ -94,7 +94,7 @@ OPTIONS
   --refs-path=refs-path      [default: refs.terrain.json]
 ```
 
-_See code: [src/commands/console.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.4/src/commands/console.ts)_
+_See code: [src/commands/console.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.5/src/commands/console.ts)_
 
 ## `terrain contract:instantiate CONTRACT`
 
@@ -115,7 +115,7 @@ OPTIONS
   --signer=signer            (required)
 ```
 
-_See code: [src/commands/contract/instantiate.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.4/src/commands/contract/instantiate.ts)_
+_See code: [src/commands/contract/instantiate.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.5/src/commands/contract/instantiate.ts)_
 
 ## `terrain contract:migrate [CONTRACT]`
 
@@ -135,7 +135,7 @@ OPTIONS
   --signer=signer            (required)
 ```
 
-_See code: [src/commands/contract/migrate.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.4/src/commands/contract/migrate.ts)_
+_See code: [src/commands/contract/migrate.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.5/src/commands/contract/migrate.ts)_
 
 ## `terrain deploy CONTRACT`
 
@@ -157,7 +157,7 @@ OPTIONS
   --signer=signer                (required)
 ```
 
-_See code: [src/commands/deploy.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.4/src/commands/deploy.ts)_
+_See code: [src/commands/deploy.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.5/src/commands/deploy.ts)_
 
 ## `terrain help [COMMAND]`
 
@@ -193,7 +193,7 @@ EXAMPLES
   $ terrain new awesome-dapp --path path/to/dapp
 ```
 
-_See code: [src/commands/new.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.4/src/commands/new.ts)_
+_See code: [src/commands/new.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.5/src/commands/new.ts)_
 
 ## `terrain sync-refs [FILE]`
 
@@ -208,7 +208,7 @@ OPTIONS
   --refs-path=refs-path  [default: ./refs.terrain.json]
 ```
 
-_See code: [src/commands/sync-refs.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.4/src/commands/sync-refs.ts)_
+_See code: [src/commands/sync-refs.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.5/src/commands/sync-refs.ts)_
 
 ## `terrain task:new [TASK]`
 
@@ -219,7 +219,7 @@ USAGE
   $ terrain task:new [TASK]
 ```
 
-_See code: [src/commands/task/new.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.4/src/commands/task/new.ts)_
+_See code: [src/commands/task/new.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.5/src/commands/task/new.ts)_
 
 ## `terrain task:run [TASK]`
 
@@ -236,5 +236,5 @@ OPTIONS
   --refs-path=refs-path      [default: refs.terrain.json]
 ```
 
-_See code: [src/commands/task/run.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.4/src/commands/task/run.ts)_
+_See code: [src/commands/task/run.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.5/src/commands/task/run.ts)_
 <!-- commandsstop -->

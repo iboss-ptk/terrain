@@ -1,7 +1,7 @@
 {
   "name": "@iboss/terrain",
   "description": "Terra development environment",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": "Supanat Potiwarakorn @iboss-ptk",
   "bin": {
     "terrain": "./bin/run"
