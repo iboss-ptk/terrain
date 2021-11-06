@@ -1,17 +1,5 @@
 import { Command, flags } from "@oclif/command";
-import {
-  BlockTxBroadcastResult,
-  Coins,
-  CreateTxOptions,
-  Fee,
-  LCDClient,
-  LCDClientConfig,
-  LocalTerra,
-  Msg,
-  MsgExecuteContract,
-  RawKey,
-  Wallet,
-} from "@terra-money/terra.js";
+import { LocalTerra, RawKey, Wallet } from "@terra-money/terra.js";
 import {
   ContractConfig,
   loadConfig,
@@ -24,6 +12,7 @@ import * as R from "ramda";
 import * as path from "path";
 import * as childProcess from "child_process";
 import { cli } from "cli-ux";
+import { LCDClientExtra } from "../../lib/LCDClientExtra";
 
 export type Env = {
   config: (contract: string) => ContractConfig;
@@ -31,44 +20,6 @@ export type Env = {
   wallets: { [key: string]: Wallet };
   client: LCDClientExtra;
 };
-
-type ContractRefs = { [contractName: string]: ContractRef };
-class LCDClientExtra extends LCDClient {
-  refs: ContractRefs;
-
-  constructor(config: LCDClientConfig, refs: ContractRefs) {
-    super(config);
-    this.refs = refs;
-  }
-
-  query(contract: string, msg: Object, instanceId = "default") {
-    return this.wasm.contractQuery(
-      this.refs[contract].contractAddresses[instanceId],
-      msg
-    );
-  }
-
-  async execute(
-    wallet: Wallet,
-    contract: string,
-    msg: Object,
-    coins?: Coins.Input,
-    options?: CreateTxOptions,
-    instanceId = "default"
-  ): Promise<BlockTxBroadcastResult> {
-    const msgs = [
-      new MsgExecuteContract(
-        wallet.key.accAddress,
-        this.refs[contract].contractAddresses[instanceId],
-        msg,
-        coins
-      ),
-    ];
-    const _options = options ? { ...options, msgs } : { msgs };
-    const tx = await wallet.createAndSignTx(_options);
-    return await this.tx.broadcast(tx);
-  }
-}
 
 const getEnv = (
   configPath: string,

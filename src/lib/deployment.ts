@@ -22,12 +22,13 @@ import * as YAML from "yaml";
 
 type StoreCodeParams = {
   conf: ContractConfig;
-  noRebuild: boolean;
-  contract: string;
-  signer: Wallet;
   network: string;
   refsPath: string;
   lcd: LCDClient;
+
+  noRebuild: boolean;
+  contract: string;
+  signer: Wallet;
   codeId?: number;
 };
 export const storeCode = async ({
@@ -93,13 +94,13 @@ export const storeCode = async ({
 type InstantiateParams = {
   conf: ContractConfig;
   signer: Wallet;
+  network: string;
+  refsPath: string;
+  lcd: LCDClient;
   admin?: AccAddress;
   contract: string;
   codeId: number;
-  network: string;
   instanceId: string;
-  refsPath: string;
-  lcd: LCDClient;
 };
 
 export const instantiate = async ({
