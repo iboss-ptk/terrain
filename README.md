@@ -34,6 +34,7 @@ USAGE
 <!-- commands -->
 * [`terrain code:new [NAME]`](#terrain-codenew-name)
 * [`terrain code:store CONTRACT`](#terrain-codestore-contract)
+* [`terrain console`](#terrain-console)
 * [`terrain contract:instantiate CONTRACT`](#terrain-contractinstantiate-contract)
 * [`terrain contract:migrate [CONTRACT]`](#terrain-contractmigrate-contract)
 * [`terrain deploy CONTRACT`](#terrain-deploy-contract)
@@ -77,6 +78,23 @@ OPTIONS
 ```
 
 _See code: [src/commands/code/store.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.4/src/commands/code/store.ts)_
+
+## `terrain console`
+
+describe the command here
+
+```
+USAGE
+  $ terrain console
+
+OPTIONS
+  --config-path=config-path  [default: config.terrain.json]
+  --keys-path=keys-path      [default: keys.terrain.js]
+  --network=network          [default: localterra]
+  --refs-path=refs-path      [default: refs.terrain.json]
+```
+
+_See code: [src/commands/console.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.4/src/commands/console.ts)_
 
 ## `terrain contract:instantiate CONTRACT`
 

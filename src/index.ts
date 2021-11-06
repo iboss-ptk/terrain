@@ -1,5 +1,6 @@
 export { run } from "@oclif/command";
 
-export { Env, task } from "./commands/task/run";
+export { task } from "./commands/task/run";
+export { Env } from "./lib/env";
 
 export * as terrajs from "@terra-money/terra.js";
