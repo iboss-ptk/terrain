@@ -25,14 +25,14 @@ type GlobalConfig = {
   [contract: string]: ContractConfig;
 };
 
-type ContractRef = {
+export type ContractRef = {
   codeId: number;
   contractAddresses: {
     [key: string]: string;
   };
 };
 
-type Refs = {
+export type Refs = {
   [network: string]: {
     [contract: string]: ContractRef;
   };
@@ -45,7 +45,7 @@ export const connection =
     cli.error(`network '${network}' not found in config`);
 
 export const loadConnections = (
-  path = `${__dirname}/config-template/config.terrain.json`
+  path = `${__dirname}/template/config.terrain.json`
 ) => connection(fs.readJSONSync(path));
 
 export const config =
@@ -80,11 +80,11 @@ export const saveConfig = (
 };
 
 export const loadConfig = (
-  path = `${__dirname}/config-template/config.terrain.json`
+  path = `${__dirname}/template/config.terrain.json`
 ) => config(fs.readJSONSync(path));
 
 export const loadKeys = (
-  path = `${__dirname}/config-template/keys.terrain.js`
+  path = `${__dirname}/template/keys.terrain.js`
 ): { [keyName: string]: RawKey } => {
   const keys = require(path);
   return R.map(
@@ -115,7 +115,7 @@ export const setContractAddress = (
   );
 
 export const loadRefs = (
-  path = `${__dirname}/config-template/refs.terrain.json`
+  path = `${__dirname}/template/refs.terrain.json`
 ): Refs => fs.readJSONSync(path);
 
 export const saveRefs = (refs: Refs, path: string) => {

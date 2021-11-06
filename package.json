@@ -55,7 +55,7 @@
     "postpack": "rm -f oclif.manifest.json",
     "posttest": "eslint . --ext .ts --config .eslintrc",
     "fixlint": "eslint . --ext .ts --config .eslintrc --fix",
-    "prepack": "rm -rf lib && tsc -b && cp -R src/config-template lib/config-template && oclif-dev manifest && oclif-dev readme",
+    "prepack": "rm -rf lib && tsc -b && cp -R src/template lib/template && oclif-dev manifest && oclif-dev readme",
     "test": "jest",
     "test:watch": "jest --watch",
     "version": "oclif-dev readme && git add README.md"

@@ -40,6 +40,8 @@ USAGE
 * [`terrain help [COMMAND]`](#terrain-help-command)
 * [`terrain new NAME`](#terrain-new-name)
 * [`terrain sync-refs [FILE]`](#terrain-sync-refs-file)
+* [`terrain task:new [TASK]`](#terrain-tasknew-task)
+* [`terrain task:run [TASK]`](#terrain-taskrun-task)
 
 ## `terrain code:new [NAME]`
 
@@ -189,4 +191,32 @@ OPTIONS
 ```
 
 _See code: [src/commands/sync-refs.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.4/src/commands/sync-refs.ts)_
+
+## `terrain task:new [TASK]`
+
+create new task
+
+```
+USAGE
+  $ terrain task:new [TASK]
+```
+
+_See code: [src/commands/task/new.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.4/src/commands/task/new.ts)_
+
+## `terrain task:run [TASK]`
+
+describe the command here
+
+```
+USAGE
+  $ terrain task:run [TASK]
+
+OPTIONS
+  --config-path=config-path  [default: config.terrain.json]
+  --keys-path=keys-path      [default: keys.terrain.js]
+  --network=network          [default: localterra]
+  --refs-path=refs-path      [default: refs.terrain.json]
+```
+
+_See code: [src/commands/task/run.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.4/src/commands/task/run.ts)_
 <!-- commandsstop -->

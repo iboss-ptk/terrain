@@ -104,14 +104,14 @@ type InstantiateParams = {
 
 export const instantiate = async ({
   conf,
+  refsPath,
+  network,
+  lcd,
   signer,
   admin,
   contract,
   codeId,
-  network,
   instanceId,
-  refsPath,
-  lcd,
 }: InstantiateParams) => {
   const instantiation = conf.instantiation;
 
@@ -175,13 +175,13 @@ type MigrateParams = {
 
 export const migrate = async ({
   conf,
+  refsPath,
+  lcd,
   signer,
   contract,
   codeId,
   network,
   instanceId,
-  refsPath,
-  lcd,
 }: MigrateParams) => {
   const instantiation = conf.instantiation;
 
