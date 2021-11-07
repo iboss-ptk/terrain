@@ -1,6 +1,16 @@
 # Terrain
 
-Terra development environment which will help you:
+<p align="center" >
+<a alt="terrain logo is generative, click to see the code!" href="https://editor.p5js.org/iboss-ptk/sketches/-mAM5HzH_">
+<img src="./logo.png" alt="terrain logo" width="200"/>
+</a>
+</p>
+
+<p align="center" >
+<b>Terrain</b> – Terra development environment for better smart contract development experience
+</p>
+
+Terrain will help you:
 
 - scaffold your dapp project
 - ease the development and deployment process
@@ -15,11 +25,12 @@ Terra development environment which will help you:
 [![License](https://img.shields.io/npm/l/terrain.svg)](https://github.com/https://github.com/iboss-ptk/terrain/terrain/blob/master/package.json)
 
 <!-- toc -->
-* [Terrain](#terrain)
-* [Setup](#setup)
-* [Getting Started](#getting-started)
-* [Usage](#usage)
-* [Commands](#commands)
+
+- [Terrain](#terrain)
+- [Setup](#setup)
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+- # [Commands](#commands)
 <!-- tocstop -->
 
 # Setup
@@ -275,6 +286,7 @@ task(async ({ wallets, refs, config, client }) => {
 # Usage
 
 <!-- usage -->
+
 ```sh-session
 $ npm install -g @iboss/terrain
 $ terrain COMMAND
@@ -286,22 +298,24 @@ USAGE
   $ terrain COMMAND
 ...
 ```
+
 <!-- usagestop -->
 
 # Commands
 
 <!-- commands -->
-* [`terrain code:new [NAME]`](#terrain-codenew-name)
-* [`terrain code:store CONTRACT`](#terrain-codestore-contract)
-* [`terrain console`](#terrain-console)
-* [`terrain contract:instantiate CONTRACT`](#terrain-contractinstantiate-contract)
-* [`terrain contract:migrate [CONTRACT]`](#terrain-contractmigrate-contract)
-* [`terrain deploy CONTRACT`](#terrain-deploy-contract)
-* [`terrain help [COMMAND]`](#terrain-help-command)
-* [`terrain new NAME`](#terrain-new-name)
-* [`terrain sync-refs [FILE]`](#terrain-sync-refs-file)
-* [`terrain task:new [TASK]`](#terrain-tasknew-task)
-* [`terrain task:run [TASK]`](#terrain-taskrun-task)
+
+- [`terrain code:new [NAME]`](#terrain-codenew-name)
+- [`terrain code:store CONTRACT`](#terrain-codestore-contract)
+- [`terrain console`](#terrain-console)
+- [`terrain contract:instantiate CONTRACT`](#terrain-contractinstantiate-contract)
+- [`terrain contract:migrate [CONTRACT]`](#terrain-contractmigrate-contract)
+- [`terrain deploy CONTRACT`](#terrain-deploy-contract)
+- [`terrain help [COMMAND]`](#terrain-help-command)
+- [`terrain new NAME`](#terrain-new-name)
+- [`terrain sync-refs [FILE]`](#terrain-sync-refs-file)
+- [`terrain task:new [TASK]`](#terrain-tasknew-task)
+- [`terrain task:run [TASK]`](#terrain-taskrun-task)
 
 ## `terrain code:new [NAME]`
 
@@ -496,4 +510,5 @@ OPTIONS
 ```
 
 _See code: [src/commands/task/run.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.8/src/commands/task/run.ts)_
+
 <!-- commandsstop -->
