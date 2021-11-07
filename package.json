@@ -1,7 +1,7 @@
 {
   "name": "@iboss/terrain",
   "description": "Terra development environment",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "__comment": "^ update template package.json to the same version when publish",
   "author": "Supanat Potiwarakorn @iboss-ptk",
   "bin": {

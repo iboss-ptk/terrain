@@ -1,5 +1,5 @@
-export default async ({ wallets, refs, config, client }) => ({
+module.exports = ({ wallets, refs, config, client }) => ({
   getCount: () => client.query("counter", { get_count: {} }),
-  increment: () =>
-    client.execute(wallets.validator, "counter", { increment: {} }),
+  increment: (signer = wallets.validator) =>
+    client.execute(signer, "counter", { increment: {} }),
 });
