@@ -4,7 +4,7 @@ import * as fs from "fs-extra";
 import * as request from "superagent";
 import * as Zip from "adm-zip";
 import cli from "cli-ux";
-
+import * as path from "path";
 export default class New extends Command {
   static description = "create new dapp from template";
 
@@ -69,17 +69,6 @@ export default class New extends Command {
     fs.renameSync("terrain-frontend-template-main", "frontend");
     fs.removeSync("frontend.zip");
 
-    fs.copyFileSync(
-      `${__dirname}/../template/config.terrain.json`,
-      "./config.terrain.json"
-    );
-    fs.copyFileSync(
-      `${__dirname}/../template/refs.terrain.json`,
-      "./refs.terrain.json"
-    );
-    fs.copyFileSync(
-      `${__dirname}/../template/keys.terrain.js`,
-      "./keys.terrain.js"
-    );
+    fs.copySync(path.join(__dirname, "..", "template"), process.cwd());
   }
 }
