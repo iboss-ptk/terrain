@@ -17,7 +17,7 @@ Terrain will help you:
 - scaffold your dapp project
 - ease the development and deployment process
 - create custom task for blockchain and contract interaction with less boilerplate code
-  - using terra.js directly coould be cumbercome, Terrain gives you extensions and utilities to help you
+  - using terra.js directly could be cumbersome, Terrain gives you extensions and utilities to help you
 - console to terra blockchain, an interactive repl which have the same extensions and utilities as custom task
 - ability to predefine functions to be used in task and console
 
