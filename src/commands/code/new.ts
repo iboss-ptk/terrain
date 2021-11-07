@@ -3,7 +3,7 @@ import { execSync } from "child_process";
 import { cli } from "cli-ux";
 
 export default class CodeNew extends Command {
-  static description = "generate new contract";
+  static description = "Generate new contract.";
 
   static flags = {
     path: flags.string({

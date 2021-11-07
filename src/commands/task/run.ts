@@ -27,7 +27,7 @@ export const task = async (fn: (env: Env) => Promise<void>) => {
 };
 
 export default class Run extends Command {
-  static description = "describe the command here";
+  static description = "run predefined task";
 
   static flags = {
     network: flags.string({ default: "localterra" }),

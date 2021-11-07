@@ -5,18 +5,27 @@ import { instantiate, storeCode } from "../lib/deployment";
 import { getSigner } from "../lib/signer";
 
 export default class Deploy extends Command {
-  static description = "store code on chain and instantiate";
+  static description =
+    "Build wasm bytecode, store code on chain and instantiate.";
 
   static flags = {
-    "no-rebuild": flags.boolean({ default: false }),
+    "no-rebuild": flags.boolean({
+      description: "deploy the wasm bytecode as is.",
+      default: false,
+    }),
     network: flags.string({ default: "localterra" }),
     "config-path": flags.string({ default: "./config.terrain.json" }),
     "refs-path": flags.string({ default: "./refs.terrain.json" }),
     "keys-path": flags.string({ default: "./keys.terrain.js" }),
     "instance-id": flags.string({ default: "default" }),
     signer: flags.string({ required: true }),
-    "set-signer-as-admin": flags.boolean({ default: false }),
-    "admin-address": flags.string({}),
+    "set-signer-as-admin": flags.boolean({
+      description: "set signer (deployer) as admin to allow migration.",
+      default: false,
+    }),
+    "admin-address": flags.string({
+      description: "set custom address as contract admin to allow migration.",
+    }),
   };
 
   static args = [{ name: "contract", required: true }];

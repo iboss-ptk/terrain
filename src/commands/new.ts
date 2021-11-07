@@ -6,7 +6,7 @@ import * as Zip from "adm-zip";
 import cli from "cli-ux";
 import * as path from "path";
 export default class New extends Command {
-  static description = "create new dapp from template";
+  static description = "Create new dapp from template.";
 
   static examples = [
     "$ terrain new awesome-dapp",

@@ -5,7 +5,7 @@ import { migrate } from "../../lib/deployment";
 import { getSigner } from "../../lib/signer";
 
 export default class ContractMigrate extends Command {
-  static description = "describe the command here";
+  static description = "Migrate the contract.";
 
   static flags = {
     network: flags.string({ default: "localterra" }),

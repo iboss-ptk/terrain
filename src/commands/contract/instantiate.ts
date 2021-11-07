@@ -5,7 +5,7 @@ import { instantiate } from "../../lib/deployment";
 import { getSigner } from "../../lib/signer";
 
 export default class ContractInstantiate extends Command {
-  static description = "instantiate contract";
+  static description = "Instantiate the contract.";
 
   static flags = {
     network: flags.string({ default: "localterra" }),

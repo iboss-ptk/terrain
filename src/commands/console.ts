@@ -5,7 +5,8 @@ import * as repl from "repl";
 import * as terrajs from "@terra-money/terra.js";
 
 export default class Console extends Command {
-  static description = "describe the command here";
+  static description =
+    "Start a repl console that provides context and convinient utilities to interact with the blockchain and your contracts.";
 
   static flags = {
     network: flags.string({ default: "localterra" }),

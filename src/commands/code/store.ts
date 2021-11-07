@@ -5,7 +5,7 @@ import { storeCode } from "../../lib/deployment";
 import { getSigner } from "../../lib/signer";
 
 export default class CodeStore extends Command {
-  static description = "store code on chain";
+  static description = "Store code on chain.";
 
   static flags = {
     "no-rebuild": flags.boolean({ default: false }),
