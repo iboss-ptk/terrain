@@ -43,7 +43,7 @@ For local developement environment, you need [LocalTerra](https://github.com/ter
 
 _**note:** if you are using m1 chip, you might need to update your Docker Desktop due to [qemu bug](https://github.com/docker/for-mac/issues/5561)_
 
-```
+```sh
 git clone --branch v0.5.2 --depth 1 https://github.com/terra-money/localterra
 cd localterra
 docker-compose up
@@ -55,7 +55,7 @@ While WASM smart contracts can theoretically be written in any programming langu
 
 Then run the following commands
 
-```
+```sh
 # set 'stable' as default release channel (used when updating rust)
 rustup default stable
 
@@ -70,7 +70,7 @@ cargo install cargo-generate --features vendored-openssl
 
 Assumed that you have [npm](https://www.npmjs.com/) installed, let's generate our first app
 
-```
+```sh
 npx terrain new my-terra-dapp
 cd my-terra-dapp
 npm install
@@ -99,7 +99,7 @@ You will now have counter example contract (no pun intended).
 
 We can right away deploy the contract on LocalTerra. Not specifying network will be defaulted to `localterra`.
 
-```
+```sh
 npx terrain deploy counter --signer validator
 ```
 
@@ -111,7 +111,7 @@ Deploy command will build and optimize wasm code, store it on the blockchain and
 
 You can deploy to different network defined in the `config.terrain.json` (`mainnet` and `testnet`). But you can not use the pre-configured accounts anymore. So you need to first update your `keys.terrain.js`
 
-```
+```js
 // can use `process.env.SECRET_MNEMONIC` or `process.env.SECRET_PRIV_KEY`
 // to populate secret in CI environment instead of hardcoding
 
@@ -134,7 +134,7 @@ First, get some Luna from [the faucet](https://faucet.terra.money/) to pay for g
 
 The easiest way to retrive the address is to use console:
 
-```
+```sh
 npx terrain console
 
 terrain > wallets.custom_tester_1.key.accAddress
@@ -143,13 +143,13 @@ terrain > wallets.custom_tester_1.key.accAddress
 
 Now you can request for Luna on the faucet then check your balance in console.
 
-```
+```sh
 terrain > (await client.bank.balance(wallets.custom_tester_1.key.accAddress))[0]
 ```
 
 `client` is an [LCDClient](https://terra-money.github.io/terra.js/classes/client_lcd_LCDClient.LCDClient.html) (LCD stands for "Light Client Daemon" as opposed to FCD a "Fulll Client Daemon", if you are curious) with some extra utility function. And `wallets` contains list of [Wallet](https://terra-money.github.io/terra.js/classes/client_lcd_Wallet.Wallet.html).
 
-```
+```sh
 npx terrain deploy counter --signer custom_tester_1 --network testnet
 ```
 
@@ -164,7 +164,7 @@ as using:
 
 After deployment, `refs.terrain.json` will get updated. Refs file contains contract references on all network.
 
-```
+```json
 {
   "localterra": {
     "counter": {
@@ -190,7 +190,7 @@ This information is used by terrain's utility functions and also the frontend te
 
 But in order to use it with frontend, You sync this in to `frontend/src` since it can not import file outside its rootDir (`src`). Todo so, run:
 
-```
+```sh
 npx terrain sync-refs
 ```
 
@@ -198,7 +198,7 @@ npx terrain sync-refs
 
 With this, we can now start frontend:
 
-```
+```sh
 cd frontend
 npm run start
 ```
@@ -209,7 +209,7 @@ Switching network in your terra wallet extension will result in referencing to d
 
 With the template setup, you can do this
 
-```
+```sh
 npx terrain console
 terrain > await lib.increment()
 ...
@@ -253,13 +253,13 @@ task(async (env) => {
 
 To run this task:
 
-```
+```sh
 npx terrain task:run example-with-lib
 ```
 
 To create new task, run:
 
-```
+```sh
 npx terrain task:new task-name
 ```
 
@@ -267,7 +267,7 @@ You might noticed by now that the `env` (`wallets`, `refs`, `config`, `client`) 
 
 Also, you can access `terrajs` in the console or import it in the lib or task to create custom interaction like in `tasks/example-custom-logic.js` or more complex one, if you are willing to do so, please consult [terra.js doc](https://terra-money.github.io/terra.js/).
 
-```
+```js
 // tasks/example-custom-logic.js
 
 const { task, terrajs } = require("@iboss/terrain");
