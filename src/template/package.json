@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "dependencies": {
-    "@iboss/terrain": "0.0.7"
+    "@iboss/terrain": "0.0.8"
   },
   "workspaces": [
     "frontend"
