@@ -10,6 +10,8 @@
 <b>Terrain</b> – Terra development environment for better smart contract development experience
 </p>
 
+---
+
 Terrain will help you:
 
 - scaffold your dapp project
