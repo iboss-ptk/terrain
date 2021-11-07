@@ -21,7 +21,7 @@ $ npm install -g @iboss/terrain
 $ terrain COMMAND
 running command...
 $ terrain (-v|--version|version)
-@iboss/terrain/0.0.6 darwin-x64 node-v17.0.1
+@iboss/terrain/0.0.7 darwin-x64 node-v17.0.1
 $ terrain --help [COMMAND]
 USAGE
   $ terrain COMMAND
@@ -46,7 +46,7 @@ USAGE
 
 ## `terrain code:new [NAME]`
 
-generate new contract
+Generate new contract.
 
 ```
 USAGE
@@ -57,11 +57,11 @@ OPTIONS
   --version=version  [default: 0.16]
 ```
 
-_See code: [src/commands/code/new.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.6/src/commands/code/new.ts)_
+_See code: [src/commands/code/new.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.7/src/commands/code/new.ts)_
 
 ## `terrain code:store CONTRACT`
 
-store code on chain
+Store code on chain.
 
 ```
 USAGE
@@ -77,11 +77,11 @@ OPTIONS
   --signer=signer            (required)
 ```
 
-_See code: [src/commands/code/store.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.6/src/commands/code/store.ts)_
+_See code: [src/commands/code/store.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.7/src/commands/code/store.ts)_
 
 ## `terrain console`
 
-describe the command here
+Start a repl console that provides context and convinient utilities to interact with the blockchain and your contracts.
 
 ```
 USAGE
@@ -94,11 +94,11 @@ OPTIONS
   --refs-path=refs-path      [default: refs.terrain.json]
 ```
 
-_See code: [src/commands/console.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.6/src/commands/console.ts)_
+_See code: [src/commands/console.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.7/src/commands/console.ts)_
 
 ## `terrain contract:instantiate CONTRACT`
 
-instantiate contract
+Instantiate the contract.
 
 ```
 USAGE
@@ -115,11 +115,11 @@ OPTIONS
   --signer=signer            (required)
 ```
 
-_See code: [src/commands/contract/instantiate.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.6/src/commands/contract/instantiate.ts)_
+_See code: [src/commands/contract/instantiate.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.7/src/commands/contract/instantiate.ts)_
 
 ## `terrain contract:migrate [CONTRACT]`
 
-describe the command here
+Migrate the contract.
 
 ```
 USAGE
@@ -135,29 +135,29 @@ OPTIONS
   --signer=signer            (required)
 ```
 
-_See code: [src/commands/contract/migrate.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.6/src/commands/contract/migrate.ts)_
+_See code: [src/commands/contract/migrate.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.7/src/commands/contract/migrate.ts)_
 
 ## `terrain deploy CONTRACT`
 
-store code on chain and instantiate
+Build wasm bytecode, store code on chain and instantiate.
 
 ```
 USAGE
   $ terrain deploy CONTRACT
 
 OPTIONS
-  --admin-address=admin-address
+  --admin-address=admin-address  set custom address as contract admin to allow migration.
   --config-path=config-path      [default: ./config.terrain.json]
   --instance-id=instance-id      [default: default]
   --keys-path=keys-path          [default: ./keys.terrain.js]
   --network=network              [default: localterra]
-  --no-rebuild
+  --no-rebuild                   deploy the wasm bytecode as is.
   --refs-path=refs-path          [default: ./refs.terrain.json]
-  --set-signer-as-admin
+  --set-signer-as-admin          set signer (deployer) as admin to allow migration.
   --signer=signer                (required)
 ```
 
-_See code: [src/commands/deploy.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.6/src/commands/deploy.ts)_
+_See code: [src/commands/deploy.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.7/src/commands/deploy.ts)_
 
 ## `terrain help [COMMAND]`
 
@@ -178,7 +178,7 @@ _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.3
 
 ## `terrain new NAME`
 
-create new dapp from template
+Create new dapp from template.
 
 ```
 USAGE
@@ -193,11 +193,11 @@ EXAMPLES
   $ terrain new awesome-dapp --path path/to/dapp
 ```
 
-_See code: [src/commands/new.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.6/src/commands/new.ts)_
+_See code: [src/commands/new.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.7/src/commands/new.ts)_
 
 ## `terrain sync-refs [FILE]`
 
-sync configuration with frontend app
+Sync configuration with frontend app.
 
 ```
 USAGE
@@ -208,7 +208,7 @@ OPTIONS
   --refs-path=refs-path  [default: ./refs.terrain.json]
 ```
 
-_See code: [src/commands/sync-refs.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.6/src/commands/sync-refs.ts)_
+_See code: [src/commands/sync-refs.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.7/src/commands/sync-refs.ts)_
 
 ## `terrain task:new [TASK]`
 
@@ -219,11 +219,11 @@ USAGE
   $ terrain task:new [TASK]
 ```
 
-_See code: [src/commands/task/new.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.6/src/commands/task/new.ts)_
+_See code: [src/commands/task/new.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.7/src/commands/task/new.ts)_
 
 ## `terrain task:run [TASK]`
 
-describe the command here
+run predefined task
 
 ```
 USAGE
@@ -236,5 +236,5 @@ OPTIONS
   --refs-path=refs-path      [default: refs.terrain.json]
 ```
 
-_See code: [src/commands/task/run.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.6/src/commands/task/run.ts)_
+_See code: [src/commands/task/run.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.7/src/commands/task/run.ts)_
 <!-- commandsstop -->
