@@ -17,9 +17,6 @@ Terra development environment which will help you:
 <!-- toc -->
 * [Terrain](#terrain)
 * [Setup](#setup)
-* [set 'stable' as default release channel (used when updating rust)](#set-stable-as-default-release-channel-used-when-updating-rust)
-* [add wasm as compilation target](#add-wasm-as-compilation-target)
-* [for generating contract](#for-generating-contract)
 * [Getting Started](#getting-started)
 * [Usage](#usage)
 * [Commands](#commands)
