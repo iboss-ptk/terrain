@@ -32,7 +32,8 @@ Terrain will help you:
 - [Setup](#setup)
 - [Getting Started](#getting-started)
 - [Usage](#usage)
-- # [Commands](#commands)
+- [Commands](#commands)
+
 <!-- tocstop -->
 
 # Setup
