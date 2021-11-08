@@ -64,6 +64,7 @@ rustup target add wasm32-unknown-unknown
 
 # for generating contract
 cargo install cargo-generate --features vendored-openssl
+cargo install cargo-run-script
 ```
 
 # Getting Started
