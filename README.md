@@ -73,6 +73,9 @@ cargo install cargo-run-script
 Assumed that you have [npm](https://www.npmjs.com/) installed, let's generate our first app
 
 ```sh
+# for first time, you might want to `npm install -g @iboss/terrain` 
+# or run `npx @iboss/terrain new my-terra-dapp`
+# since `terrain` npm module name is occupied by another module
 npx terrain new my-terra-dapp
 cd my-terra-dapp
 npm install
