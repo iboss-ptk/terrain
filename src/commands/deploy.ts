@@ -3,6 +3,7 @@ import { LCDClient } from "@terra-money/terra.js";
 import { loadConfig, loadConnections } from "../config";
 import { instantiate, storeCode } from "../lib/deployment";
 import { getSigner } from "../lib/signer";
+import * as fs from "fs";
 
 export default class Deploy extends Command {
   static description =
@@ -25,6 +26,9 @@ export default class Deploy extends Command {
     }),
     "admin-address": flags.string({
       description: "set custom address as contract admin to allow migration.",
+    }),
+    "frontend-refs-path": flags.string({
+      default: "./frontend/src/refs.terrain.json",
     }),
   };
 
@@ -71,5 +75,7 @@ export default class Deploy extends Command {
       refsPath: flags["refs-path"],
       lcd: lcd,
     });
+
+    fs.copyFileSync(flags["refs-path"], flags["frontend-refs-path"]);
   }
 }
