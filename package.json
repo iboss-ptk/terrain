@@ -49,7 +49,8 @@
     "bin": "terrain",
     "plugins": [
       "@oclif/plugin-help"
-    ]
+    ],
+    "helpClass": "./src/lib/help"
   },
   "repository": "https://github.com/iboss-ptk/terrain",
   "scripts": {
@@ -65,6 +66,7 @@
   "dependencies": {
     "@oclif/command": "^1.8.0",
     "@oclif/config": "^1.17.0",
+    "@oclif/core": "^1.0.11",
     "@oclif/plugin-help": "^3.2.3",
     "@terra-money/terra.js": "^2.1.19",
     "adm-zip": "^0.5.9",
