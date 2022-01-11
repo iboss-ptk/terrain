@@ -45,11 +45,22 @@ export const storeCode = async ({
 
   if (!noRebuild) {
     execSync("cargo wasm", { stdio: "inherit" });
-    execSync("cargo run-script optimize", { stdio: "inherit" });
+
+    // Need to use the rust-optimizer-arm64 image on arm64 architecture.
+    if (process.arch === 'arm64') {
+      execSync(`docker run --rm -v "$(pwd)":/code \
+      --mount type=volume,source="$(basename "$(pwd)")_cache",target=/code/target \
+      --mount type=volume,source=registry_cache,target=/usr/local/cargo/registry \
+      cosmwasm/rust-optimizer-arm64:0.12.4`);
+    } else {
+      execSync("cargo run-script optimize", { stdio: "inherit" });
+    }
   }
 
+  // Replace dashses with underscores, and append `-aarch64` if the user is using an arm64 processor.
+  const wasmFileName = `artifacts/${contract.replace(/-/g, "_")}${process.arch === "arm64" ? "-aarch64" : null}.wasm`;
   const wasmByteCode = fs
-    .readFileSync(`artifacts/${contract.replace(/-/g, "_")}.wasm`)
+    .readFileSync(wasmFileName)
     .toString("base64");
 
   cli.action.start("storing wasm bytecode on chain");
