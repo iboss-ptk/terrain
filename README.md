@@ -318,13 +318,13 @@ You can place this anywhere, I usually stick it above the InstantiateMsg struct.
 
 With MigrateMsg defined we need to update `contract.rs`. First update the import from `crate::msg` to include `MigrateMsg`:
 
-```
+```rust
 use crate::msg::{CountResponse, ExecuteMsg, InstantiateMsg, QueryMsg, MigrateMsg};
 ```
 
 Then add the following method above `instantiate`: 
 
-```
+```rust
 #[cfg_attr(not(feature = "library"), entry_point)]
 pub fn migrate(_deps: DepsMut, _env: Env, _msg: MigrateMsg) -> StdResult<Response> {
     Ok(Response::default())
@@ -338,13 +338,13 @@ In the previous Terrain tutorial we showed you how to deploy the contract, but w
 After adding MigrateMsg to the smart contract we can redeploy and add the `--set-signer-as-admin` flag. This tells Terra that the transaction signer is allowed to migrate the contract in the future. 
 
 
-```
+```sh
 npx terrain deploy counter --signer validator --set-signer-as-admin
 ```
 
 With the new contract deployed you can make some changes, then migrate to the new code with the following command: 
 
-```
+```sh
 npx terrain contract:migrate counter --signer validator
 ```
 
