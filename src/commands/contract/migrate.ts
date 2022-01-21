@@ -1,7 +1,7 @@
 import { Command, flags } from "@oclif/command";
 import { LCDClient } from "@terra-money/terra.js";
-import { loadConfig, loadConnections, loadRefs } from "../../config";
-import { migrate } from "../../lib/deployment";
+import { loadConfig, loadConnections } from "../../config";
+import { migrate, storeCode } from "../../lib/deployment";
 import { getSigner } from "../../lib/signer";
 
 export default class ContractMigrate extends Command {
@@ -16,7 +16,7 @@ export default class ContractMigrate extends Command {
     signer: flags.string({ required: true }),
     "code-id": flags.integer({
       description:
-        "target code id for migration, can do only once after columbus-5 upgrade",
+        "target code id for migration",
     }),
   };
 
@@ -38,10 +38,15 @@ export default class ContractMigrate extends Command {
       lcd,
     });
 
-    console.log(loadRefs(flags["refs-path"])[flags.network][args.contract]);
-    const codeId =
-      flags["code-id"] ||
-      loadRefs(flags["refs-path"])[flags.network][args.contract].codeId;
+    const codeId = await storeCode({
+      conf,
+      noRebuild: flags["no-rebuild"],
+      contract: args.contract,
+      signer,
+      network: flags.network,
+      refsPath: flags["refs-path"],
+      lcd: lcd,
+    });
 
     migrate({
       conf,

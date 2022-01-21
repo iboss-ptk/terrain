@@ -185,13 +185,13 @@ export const migrate = async ({
   instanceId,
 }: MigrateParams) => {
   const instantiation = conf.instantiation;
-
-  cli.action.start(`instantiating contract with code id: ${codeId}`);
   const refs = loadRefs(refsPath);
 
   const contractAddress = refs[network][contract].contractAddresses[instanceId];
 
-  const instantiateTx = await signer.createAndSignTx({
+  cli.action.start(`migrating contract with address ${contractAddress} to code id: ${codeId}`);
+
+  const migrateTx = await signer.createAndSignTx({
     msgs: [
       new MsgMigrateContract(
         signer.key.accAddress,
@@ -203,7 +203,7 @@ export const migrate = async ({
     fee: new Fee(instantiation.fee.gasLimit, instantiation.fee.amount),
   });
 
-  const resInstant = await lcd.tx.broadcast(instantiateTx);
+  const resInstant = await lcd.tx.broadcast(migrateTx);
 
   let log = [];
   try {
@@ -218,12 +218,6 @@ export const migrate = async ({
   }
 
   cli.action.stop();
-
-  // const contractAddress = log[0].events
-  //   .find((event: { type: string }) => event.type === "instantiate_contract")
-  //   .attributes.find(
-  //     (attr: { key: string }) => attr.key === "contract_address"
-  //   ).value;
 
   const updatedRefs = setContractAddress(
     network,

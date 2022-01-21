@@ -64,7 +64,7 @@ export default class Deploy extends Command {
       ? signer.key.accAddress
       : flags["admin-address"];
 
-    instantiate({
+    await instantiate({
       conf,
       signer,
       admin,
