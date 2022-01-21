@@ -31,6 +31,7 @@ Terrain will help you:
 - [Terrain](#terrain)
 - [Setup](#setup)
 - [Getting Started](#getting-started)
+- [Migrating CosmWasm contracts on Terra](#migrating-cosmwasm-contracts-on-terra)
 - [Usage](#usage)
 - [Commands](#commands)
 
@@ -286,6 +287,65 @@ task(async ({ wallets, refs, config, client }) => {
   console.log("mnemonic", key.mnemonic);
 });
 
+```
+---
+
+# Migrating CosmWasm contracts on Terra
+
+(Thanks to @octalmage)
+
+On Terra it is possible to initilize contracts as migratable. This functionallity allows the adminstrator to upload a new version of the contract, then send a migrate message to move to the new code.
+
+We'll be using Terrain, a Terra development suite to ease the scaffolding, deployment, and migration of our contracts. 
+
+This tutorial builds on top of the Terrain quick start guide: https://docs.terra.money/Tutorials/Quick-start/Initial-setup.html
+
+## Adding MigrateMsg to contract
+
+There's two steps required to make a contract migratable: 
+
+1. Smart contract handles the MigrateMsg transaction. 
+2. Smart contract has an admin set, which is the address that's allowed to perform migrations. 
+
+To implement support for MigrateMsg you will need to add the message to `msg.rs`: 
+
+```rust
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+pub struct MigrateMsg {}
+```
+
+You can place this anywhere, I usually stick it above the InstantiateMsg struct.
+
+With MigrateMsg defined we need to update `contract.rs`. First update the import from `crate::msg` to include `MigrateMsg`:
+
+```
+use crate::msg::{CountResponse, ExecuteMsg, InstantiateMsg, QueryMsg, MigrateMsg};
+```
+
+Then add the following method above `instantiate`: 
+
+```
+#[cfg_attr(not(feature = "library"), entry_point)]
+pub fn migrate(_deps: DepsMut, _env: Env, _msg: MigrateMsg) -> StdResult<Response> {
+    Ok(Response::default())
+}
+```
+
+## Calling migrate
+
+In the previous Terrain tutorial we showed you how to deploy the contract, but we did not initilize it as migratable. 
+
+After adding MigrateMsg to the smart contract we can redeploy and add the `--set-signer-as-admin` flag. This tells Terra that the transaction signer is allowed to migrate the contract in the future. 
+
+
+```
+npx terrain deploy counter --signer validator --set-signer-as-admin
+```
+
+With the new contract deployed you can make some changes, then migrate to the new code with the following command: 
+
+```
+npx terrain contract:migrate counter --signer validator
 ```
 
 ---
