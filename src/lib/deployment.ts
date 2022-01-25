@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 import {
   AccAddress,
   Fee,
@@ -64,11 +65,28 @@ export const storeCode = async ({
     fee: new Fee(store.fee.gasLimit, store.fee.amount),
   });
 
-  const res = await lcd.tx.broadcast(storeCodeTx);
-  cli.action.stop();
+  const res = await lcd.tx.broadcastSync(storeCodeTx).then(async result => {
+    for (let i = 0; i <= 100; i++) {
+      let response
+      try {
+        response = await lcd.tx.txInfo(result.txhash)
+      } catch (error) {
+        // NOOP
+      }
+
+      if (response) {
+        return response
+      }
+
+      await new Promise(resolve => setTimeout(resolve, 250))
+    }
+  })
+  
+
+  cli.action.stop()
 
   try {
-    const savedCodeId = JSON.parse(res.raw_log)[0]
+    const savedCodeId = JSON.parse((res && res.raw_log) || '')[0]
       .events.find((msg: { type: string }) => msg.type === "store_code")
       .attributes.find((attr: { key: string }) => attr.key === "code_id").value;
 
