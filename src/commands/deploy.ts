@@ -50,6 +50,9 @@ export default class Deploy extends Command {
       lcd,
     });
 
+    // Store sequence to manually increment after code is stored.
+    const sequence = await signer.sequence();
+
     const codeId = await storeCode({
       conf,
       noRebuild: flags["no-rebuild"],
@@ -64,10 +67,11 @@ export default class Deploy extends Command {
       ? signer.key.accAddress
       : flags["admin-address"];
 
-    instantiate({
+    await instantiate({
       conf,
       signer,
       admin,
+      sequence: 1 + sequence,
       contract: args.contract,
       codeId,
       network: flags.network,

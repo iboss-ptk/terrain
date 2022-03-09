@@ -65,25 +65,32 @@ export const storeCode = async ({
     fee: new Fee(store.fee.gasLimit, store.fee.amount),
   });
 
-  const res = await lcd.tx.broadcastSync(storeCodeTx).then(async result => {
-    for (let i = 0; i <= 100; i++) {
-      let response
-      try {
-        response = await lcd.tx.txInfo(result.txhash)
-      } catch (error) {
-        // NOOP
-      }
+  const result = await lcd.tx.broadcastSync(storeCodeTx);
+  if (typeof result.code !== 'undefined') {
+    return cli.error(result.raw_log);
+  }
 
-      if (response) {
-        return response
-      }
-
-      await new Promise(resolve => setTimeout(resolve, 250))
+  let res;
+  for (let i = 0; i <= 100; i++) {
+    
+    try {
+      res = await lcd.tx.txInfo(result.txhash);
+    } catch (error) {
+      // NOOP
     }
-  })
-  
+
+    if (res) {
+      break;
+    }
+
+    await new Promise((resolve) => setTimeout(resolve, 250));
+  }
 
   cli.action.stop()
+
+  if (typeof res === 'undefined') {
+    return cli.error('transaction not included in a block before timeout');
+  }
 
   try {
     const savedCodeId = JSON.parse((res && res.raw_log) || '')[0]
@@ -119,6 +126,7 @@ type InstantiateParams = {
   contract: string;
   codeId: number;
   instanceId: string;
+  sequence?: number;
 };
 
 export const instantiate = async ({
@@ -131,12 +139,17 @@ export const instantiate = async ({
   contract,
   codeId,
   instanceId,
+  sqeuence,
 }: InstantiateParams) => {
   const instantiation = conf.instantiation;
 
   cli.action.start(`instantiating contract with code id: ${codeId}`);
 
+  // Allow manual account sequences.
+  const manualSequence = sqeuence || (await signer.sequence());
+
   const instantiateTx = await signer.createAndSignTx({
+    sequence: manualSequence,
     msgs: [
       new MsgInstantiateContract(
         signer.key.accAddress,
