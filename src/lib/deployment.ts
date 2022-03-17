@@ -71,7 +71,7 @@ export const storeCode = async ({
   }
 
   let res;
-  for (let i = 0; i <= 100; i++) {
+  for (let i = 0; i <= 50; i++) {
     
     try {
       res = await lcd.tx.txInfo(result.txhash);
@@ -83,7 +83,7 @@ export const storeCode = async ({
       break;
     }
 
-    await new Promise((resolve) => setTimeout(resolve, 250));
+    await new Promise((resolve) => setTimeout(resolve, 500));
   }
 
   cli.action.stop()
