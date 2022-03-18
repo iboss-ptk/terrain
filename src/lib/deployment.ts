@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 import {
   AccAddress,
   Fee,
@@ -64,11 +65,35 @@ export const storeCode = async ({
     fee: new Fee(store.fee.gasLimit, store.fee.amount),
   });
 
-  const res = await lcd.tx.broadcast(storeCodeTx);
-  cli.action.stop();
+  const result = await lcd.tx.broadcastSync(storeCodeTx);
+  if (typeof result.code !== 'undefined') {
+    return cli.error(result.raw_log);
+  }
+
+  let res;
+  for (let i = 0; i <= 50; i++) {
+    
+    try {
+      res = await lcd.tx.txInfo(result.txhash);
+    } catch (error) {
+      // NOOP
+    }
+
+    if (res) {
+      break;
+    }
+
+    await new Promise((resolve) => setTimeout(resolve, 500));
+  }
+
+  cli.action.stop()
+
+  if (typeof res === 'undefined') {
+    return cli.error('transaction not included in a block before timeout');
+  }
 
   try {
-    const savedCodeId = JSON.parse(res.raw_log)[0]
+    const savedCodeId = JSON.parse((res && res.raw_log) || '')[0]
       .events.find((msg: { type: string }) => msg.type === "store_code")
       .attributes.find((attr: { key: string }) => attr.key === "code_id").value;
 
@@ -101,6 +126,7 @@ type InstantiateParams = {
   contract: string;
   codeId: number;
   instanceId: string;
+  sequence?: number;
 };
 
 export const instantiate = async ({
@@ -113,12 +139,17 @@ export const instantiate = async ({
   contract,
   codeId,
   instanceId,
+  sqeuence,
 }: InstantiateParams) => {
   const instantiation = conf.instantiation;
 
   cli.action.start(`instantiating contract with code id: ${codeId}`);
 
+  // Allow manual account sequences.
+  const manualSequence = sqeuence || (await signer.sequence());
+
   const instantiateTx = await signer.createAndSignTx({
+    sequence: manualSequence,
     msgs: [
       new MsgInstantiateContract(
         signer.key.accAddress,
