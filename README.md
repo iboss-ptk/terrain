@@ -27,14 +27,18 @@ Terrain will help you:
 [![License](https://img.shields.io/npm/l/terrain.svg)](https://github.com/https://github.com/iboss-ptk/terrain/terrain/blob/master/package.json)
 
 <!-- toc -->
-
-- [Terrain](#terrain)
-- [Setup](#setup)
-- [Getting Started](#getting-started)
-- [Migrating CosmWasm contracts on Terra](#migrating-cosmwasm-contracts-on-terra)
-- [Usage](#usage)
-- [Commands](#commands)
-
+* [Terrain](#terrain)
+* [Setup](#setup)
+* [set 'stable' as default release channel (used when updating rust)](#set-stable-as-default-release-channel-used-when-updating-rust)
+* [add wasm as compilation target](#add-wasm-as-compilation-target)
+* [for generating contract](#for-generating-contract)
+* [Getting Started](#getting-started)
+* [for first time, you might want to `npm install -g @iboss/terrain`](#for-first-time-you-might-want-to-npm-install--g-ibossterrain)
+* [or run `npx @iboss/terrain new my-terra-dapp`](#or-run-npx-ibossterrain-new-my-terra-dapp)
+* [since `terrain` npm module name is occupied by another module](#since-terrain-npm-module-name-is-occupied-by-another-module)
+* [Migrating CosmWasm contracts on Terra](#migrating-cosmwasm-contracts-on-terra)
+* [Usage](#usage)
+* [Commands](#commands)
 <!-- tocstop -->
 
 # Setup
@@ -353,36 +357,33 @@ npx terrain contract:migrate counter --signer validator
 # Usage
 
 <!-- usage -->
-
 ```sh-session
 $ npm install -g @iboss/terrain
 $ terrain COMMAND
 running command...
 $ terrain (-v|--version|version)
-@iboss/terrain/0.0.8 darwin-x64 node-v17.0.1
+@iboss/terrain/0.0.9 darwin-x64 node-v17.0.1
 $ terrain --help [COMMAND]
 USAGE
   $ terrain COMMAND
 ...
 ```
-
 <!-- usagestop -->
 
 # Commands
 
 <!-- commands -->
-
-- [`terrain code:new [NAME]`](#terrain-codenew-name)
-- [`terrain code:store CONTRACT`](#terrain-codestore-contract)
-- [`terrain console`](#terrain-console)
-- [`terrain contract:instantiate CONTRACT`](#terrain-contractinstantiate-contract)
-- [`terrain contract:migrate [CONTRACT]`](#terrain-contractmigrate-contract)
-- [`terrain deploy CONTRACT`](#terrain-deploy-contract)
-- [`terrain help [COMMAND]`](#terrain-help-command)
-- [`terrain new NAME`](#terrain-new-name)
-- [`terrain sync-refs [FILE]`](#terrain-sync-refs-file)
-- [`terrain task:new [TASK]`](#terrain-tasknew-task)
-- [`terrain task:run [TASK]`](#terrain-taskrun-task)
+* [`terrain code:new [NAME]`](#terrain-codenew-name)
+* [`terrain code:store CONTRACT`](#terrain-codestore-contract)
+* [`terrain console`](#terrain-console)
+* [`terrain contract:instantiate CONTRACT`](#terrain-contractinstantiate-contract)
+* [`terrain contract:migrate [CONTRACT]`](#terrain-contractmigrate-contract)
+* [`terrain deploy CONTRACT`](#terrain-deploy-contract)
+* [`terrain help [COMMAND]`](#terrain-help-command)
+* [`terrain new NAME`](#terrain-new-name)
+* [`terrain sync-refs [FILE]`](#terrain-sync-refs-file)
+* [`terrain task:new [TASK]`](#terrain-tasknew-task)
+* [`terrain task:run [TASK]`](#terrain-taskrun-task)
 
 ## `terrain code:new [NAME]`
 
@@ -390,14 +391,17 @@ Generate new contract.
 
 ```
 USAGE
-  $ terrain code:new [NAME]
+  $ terrain code:new [NAME] [--path <value>] [--version <value>]
 
-OPTIONS
-  --path=path        [default: ./contracts] path to keep the contracts
-  --version=version  [default: 0.16]
+FLAGS
+  --path=<value>     [default: ./contracts] path to keep the contracts
+  --version=<value>  [default: 0.16]
+
+DESCRIPTION
+  Generate new contract.
 ```
 
-_See code: [src/commands/code/new.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.8/src/commands/code/new.ts)_
+_See code: [src/commands/code/new.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.9/src/commands/code/new.ts)_
 
 ## `terrain code:store CONTRACT`
 
@@ -405,19 +409,23 @@ Store code on chain.
 
 ```
 USAGE
-  $ terrain code:store CONTRACT
+  $ terrain code:store [CONTRACT] --signer <value> [--no-rebuild] [--network <value>] [--config-path <value>]
+    [--refs-path <value>] [--keys-path <value>] [--code-id <value>]
 
-OPTIONS
-  --code-id=code-id
-  --config-path=config-path  [default: ./config.terrain.json]
-  --keys-path=keys-path      [default: ./keys.terrain.js]
-  --network=network          [default: localterra]
+FLAGS
+  --code-id=<value>
+  --config-path=<value>  [default: ./config.terrain.json]
+  --keys-path=<value>    [default: ./keys.terrain.js]
+  --network=<value>      [default: localterra]
   --no-rebuild
-  --refs-path=refs-path      [default: ./refs.terrain.json]
-  --signer=signer            (required)
+  --refs-path=<value>    [default: ./refs.terrain.json]
+  --signer=<value>       (required)
+
+DESCRIPTION
+  Store code on chain.
 ```
 
-_See code: [src/commands/code/store.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.8/src/commands/code/store.ts)_
+_See code: [src/commands/code/store.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.9/src/commands/code/store.ts)_
 
 ## `terrain console`
 
@@ -425,16 +433,20 @@ Start a repl console that provides context and convinient utilities to interact 
 
 ```
 USAGE
-  $ terrain console
+  $ terrain console [--network <value>] [--config-path <value>] [--refs-path <value>] [--keys-path <value>]
 
-OPTIONS
-  --config-path=config-path  [default: config.terrain.json]
-  --keys-path=keys-path      [default: keys.terrain.js]
-  --network=network          [default: localterra]
-  --refs-path=refs-path      [default: refs.terrain.json]
+FLAGS
+  --config-path=<value>  [default: config.terrain.json]
+  --keys-path=<value>    [default: keys.terrain.js]
+  --network=<value>      [default: localterra]
+  --refs-path=<value>    [default: refs.terrain.json]
+
+DESCRIPTION
+  Start a repl console that provides context and convinient utilities to interact with the blockchain and your
+  contracts.
 ```
 
-_See code: [src/commands/console.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.8/src/commands/console.ts)_
+_See code: [src/commands/console.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.9/src/commands/console.ts)_
 
 ## `terrain contract:instantiate CONTRACT`
 
@@ -442,20 +454,24 @@ Instantiate the contract.
 
 ```
 USAGE
-  $ terrain contract:instantiate CONTRACT
+  $ terrain contract:instantiate [CONTRACT] --signer <value> [--network <value>] [--config-path <value>] [--refs-path
+    <value>] [--keys-path <value>] [--instance-id <value>] [--code-id <value>] [--set-signer-as-admin]
 
-OPTIONS
-  --code-id=code-id          target code id for migration, can do only once after columbus-5 upgrade
-  --config-path=config-path  [default: ./config.terrain.json]
-  --instance-id=instance-id  [default: default]
-  --keys-path=keys-path      [default: ./keys.terrain.js]
-  --network=network          [default: localterra]
-  --refs-path=refs-path      [default: ./refs.terrain.json]
+FLAGS
+  --code-id=<value>      target code id for migration, can do only once after columbus-5 upgrade
+  --config-path=<value>  [default: ./config.terrain.json]
+  --instance-id=<value>  [default: default]
+  --keys-path=<value>    [default: ./keys.terrain.js]
+  --network=<value>      [default: localterra]
+  --refs-path=<value>    [default: ./refs.terrain.json]
   --set-signer-as-admin
-  --signer=signer            (required)
+  --signer=<value>       (required)
+
+DESCRIPTION
+  Instantiate the contract.
 ```
 
-_See code: [src/commands/contract/instantiate.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.8/src/commands/contract/instantiate.ts)_
+_See code: [src/commands/contract/instantiate.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.9/src/commands/contract/instantiate.ts)_
 
 ## `terrain contract:migrate [CONTRACT]`
 
@@ -463,19 +479,23 @@ Migrate the contract.
 
 ```
 USAGE
-  $ terrain contract:migrate [CONTRACT]
+  $ terrain contract:migrate [CONTRACT] --signer <value> [--network <value>] [--config-path <value>] [--refs-path
+    <value>] [--keys-path <value>] [--instance-id <value>] [--code-id <value>]
 
-OPTIONS
-  --code-id=code-id          target code id for migration, can do only once after columbus-5 upgrade
-  --config-path=config-path  [default: ./config.terrain.json]
-  --instance-id=instance-id  [default: default]
-  --keys-path=keys-path      [default: ./keys.terrain.js]
-  --network=network          [default: localterra]
-  --refs-path=refs-path      [default: ./refs.terrain.json]
-  --signer=signer            (required)
+FLAGS
+  --code-id=<value>      target code id for migration
+  --config-path=<value>  [default: ./config.terrain.json]
+  --instance-id=<value>  [default: default]
+  --keys-path=<value>    [default: ./keys.terrain.js]
+  --network=<value>      [default: localterra]
+  --refs-path=<value>    [default: ./refs.terrain.json]
+  --signer=<value>       (required)
+
+DESCRIPTION
+  Migrate the contract.
 ```
 
-_See code: [src/commands/contract/migrate.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.8/src/commands/contract/migrate.ts)_
+_See code: [src/commands/contract/migrate.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.9/src/commands/contract/migrate.ts)_
 
 ## `terrain deploy CONTRACT`
 
@@ -483,21 +503,27 @@ Build wasm bytecode, store code on chain and instantiate.
 
 ```
 USAGE
-  $ terrain deploy CONTRACT
+  $ terrain deploy [CONTRACT] --signer <value> [--no-rebuild] [--network <value>] [--config-path <value>]
+    [--refs-path <value>] [--keys-path <value>] [--instance-id <value>] [--set-signer-as-admin] [--admin-address
+    <value>] [--frontend-refs-path <value>]
 
-OPTIONS
-  --admin-address=admin-address  set custom address as contract admin to allow migration.
-  --config-path=config-path      [default: ./config.terrain.json]
-  --instance-id=instance-id      [default: default]
-  --keys-path=keys-path          [default: ./keys.terrain.js]
-  --network=network              [default: localterra]
-  --no-rebuild                   deploy the wasm bytecode as is.
-  --refs-path=refs-path          [default: ./refs.terrain.json]
-  --set-signer-as-admin          set signer (deployer) as admin to allow migration.
-  --signer=signer                (required)
+FLAGS
+  --admin-address=<value>       set custom address as contract admin to allow migration.
+  --config-path=<value>         [default: ./config.terrain.json]
+  --frontend-refs-path=<value>  [default: ./frontend/src/refs.terrain.json]
+  --instance-id=<value>         [default: default]
+  --keys-path=<value>           [default: ./keys.terrain.js]
+  --network=<value>             [default: localterra]
+  --no-rebuild                  deploy the wasm bytecode as is.
+  --refs-path=<value>           [default: ./refs.terrain.json]
+  --set-signer-as-admin         set signer (deployer) as admin to allow migration.
+  --signer=<value>              (required)
+
+DESCRIPTION
+  Build wasm bytecode, store code on chain and instantiate.
 ```
 
-_See code: [src/commands/deploy.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.8/src/commands/deploy.ts)_
+_See code: [src/commands/deploy.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.9/src/commands/deploy.ts)_
 
 ## `terrain help [COMMAND]`
 
@@ -505,13 +531,16 @@ display help for terrain
 
 ```
 USAGE
-  $ terrain help [COMMAND]
+  $ terrain help [COMMAND] [--all]
 
 ARGUMENTS
   COMMAND  command to show help for
 
-OPTIONS
+FLAGS
   --all  see all commands in CLI
+
+DESCRIPTION
+  display help for terrain
 ```
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.3/src/commands/help.ts)_
@@ -522,18 +551,22 @@ Create new dapp from template.
 
 ```
 USAGE
-  $ terrain new NAME
+  $ terrain new [NAME] [--path <value>] [--version <value>]
 
-OPTIONS
-  --path=path        path to keep the project
-  --version=version  [default: 0.16]
+FLAGS
+  --path=<value>     path to keep the project
+  --version=<value>  [default: 0.16]
+
+DESCRIPTION
+  Create new dapp from template.
 
 EXAMPLES
   $ terrain new awesome-dapp
+
   $ terrain new awesome-dapp --path path/to/dapp
 ```
 
-_See code: [src/commands/new.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.8/src/commands/new.ts)_
+_See code: [src/commands/new.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.9/src/commands/new.ts)_
 
 ## `terrain sync-refs [FILE]`
 
@@ -541,14 +574,17 @@ Sync configuration with frontend app.
 
 ```
 USAGE
-  $ terrain sync-refs [FILE]
+  $ terrain sync-refs [FILE] [--refs-path <value>] [--dest <value>]
 
-OPTIONS
-  --dest=dest            [default: ./frontend/src/refs.terrain.json]
-  --refs-path=refs-path  [default: ./refs.terrain.json]
+FLAGS
+  --dest=<value>       [default: ./frontend/src/refs.terrain.json]
+  --refs-path=<value>  [default: ./refs.terrain.json]
+
+DESCRIPTION
+  Sync configuration with frontend app.
 ```
 
-_See code: [src/commands/sync-refs.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.8/src/commands/sync-refs.ts)_
+_See code: [src/commands/sync-refs.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.9/src/commands/sync-refs.ts)_
 
 ## `terrain task:new [TASK]`
 
@@ -557,9 +593,12 @@ create new task
 ```
 USAGE
   $ terrain task:new [TASK]
+
+DESCRIPTION
+  create new task
 ```
 
-_See code: [src/commands/task/new.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.8/src/commands/task/new.ts)_
+_See code: [src/commands/task/new.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.9/src/commands/task/new.ts)_
 
 ## `terrain task:run [TASK]`
 
@@ -567,15 +606,18 @@ run predefined task
 
 ```
 USAGE
-  $ terrain task:run [TASK]
+  $ terrain task:run [TASK] [--network <value>] [--config-path <value>] [--refs-path <value>] [--keys-path
+    <value>]
 
-OPTIONS
-  --config-path=config-path  [default: config.terrain.json]
-  --keys-path=keys-path      [default: keys.terrain.js]
-  --network=network          [default: localterra]
-  --refs-path=refs-path      [default: refs.terrain.json]
+FLAGS
+  --config-path=<value>  [default: config.terrain.json]
+  --keys-path=<value>    [default: keys.terrain.js]
+  --network=<value>      [default: localterra]
+  --refs-path=<value>    [default: refs.terrain.json]
+
+DESCRIPTION
+  run predefined task
 ```
 
-_See code: [src/commands/task/run.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.8/src/commands/task/run.ts)_
-
+_See code: [src/commands/task/run.ts](https://github.com/iboss-ptk/terrain/blob/v0.0.9/src/commands/task/run.ts)_
 <!-- commandsstop -->

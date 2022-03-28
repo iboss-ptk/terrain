@@ -10,6 +10,9 @@ import {
   Wallet,
 } from "@terra-money/terra.js";
 import { execSync } from "child_process";
+import { cli } from "cli-ux";
+import * as fs from "fs-extra";
+import * as YAML from "yaml";
 import {
   ContractConfig,
   loadRefs,
@@ -17,9 +20,6 @@ import {
   setCodeId,
   setContractAddress,
 } from "../config";
-import * as fs from "fs-extra";
-import { cli } from "cli-ux";
-import * as YAML from "yaml";
 
 type StoreCodeParams = {
   conf: ContractConfig;
@@ -47,11 +47,23 @@ export const storeCode = async ({
   if (!noRebuild) {
     execSync("cargo wasm", { stdio: "inherit" });
     execSync("cargo run-script optimize", { stdio: "inherit" });
+    execSync(`cp artifacts/${contract.replace(/-/g, "_")}{-aarch64,}.wasm`);
   }
 
-  const wasmByteCode = fs
-    .readFileSync(`artifacts/${contract.replace(/-/g, "_")}.wasm`)
-    .toString("base64");
+  const isNonArm64 = fs.existsSync(
+    `artifacts/${contract.replace(/-/g, "_")}.wasm`
+  );
+  let wasmByteCode = (
+    isNonArm64
+      ? fs.readFileSync(`artifacts/${contract.replace(/-/g, "_")}.wasm`)
+      : fs.readFileSync(`artifacts/${contract.replace(/-/g, "_")}-aarch64.wasm`)
+  ).toString("base64");
+
+  if (!isNonArm64) {
+    cli.warn(
+      "the optimized bytecode is targeting arm64 architecture, it is expermental and advised not to use in production."
+    );
+  }
 
   cli.action.start("storing wasm bytecode on chain");
 
@@ -66,13 +78,12 @@ export const storeCode = async ({
   });
 
   const result = await lcd.tx.broadcastSync(storeCodeTx);
-  if (typeof result.code !== 'undefined') {
+  if (typeof result.code !== "undefined") {
     return cli.error(result.raw_log);
   }
 
   let res;
   for (let i = 0; i <= 50; i++) {
-    
     try {
       res = await lcd.tx.txInfo(result.txhash);
     } catch (error) {
@@ -86,14 +97,14 @@ export const storeCode = async ({
     await new Promise((resolve) => setTimeout(resolve, 500));
   }
 
-  cli.action.stop()
+  cli.action.stop();
 
-  if (typeof res === 'undefined') {
-    return cli.error('transaction not included in a block before timeout');
+  if (typeof res === "undefined") {
+    return cli.error("transaction not included in a block before timeout");
   }
 
   try {
-    const savedCodeId = JSON.parse((res && res.raw_log) || '')[0]
+    const savedCodeId = JSON.parse((res && res.raw_log) || "")[0]
       .events.find((msg: { type: string }) => msg.type === "store_code")
       .attributes.find((attr: { key: string }) => attr.key === "code_id").value;
 
@@ -139,14 +150,14 @@ export const instantiate = async ({
   contract,
   codeId,
   instanceId,
-  sqeuence,
+  sequence,
 }: InstantiateParams) => {
   const instantiation = conf.instantiation;
 
   cli.action.start(`instantiating contract with code id: ${codeId}`);
 
   // Allow manual account sequences.
-  const manualSequence = sqeuence || (await signer.sequence());
+  const manualSequence = sequence || (await signer.sequence());
 
   const instantiateTx = await signer.createAndSignTx({
     sequence: manualSequence,
@@ -220,7 +231,9 @@ export const migrate = async ({
 
   const contractAddress = refs[network][contract].contractAddresses[instanceId];
 
-  cli.action.start(`migrating contract with address ${contractAddress} to code id: ${codeId}`);
+  cli.action.start(
+    `migrating contract with address ${contractAddress} to code id: ${codeId}`
+  );
 
   const migrateTx = await signer.createAndSignTx({
     msgs: [
