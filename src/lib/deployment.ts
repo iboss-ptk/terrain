@@ -47,7 +47,6 @@ export const storeCode = async ({
   if (!noRebuild) {
     execSync("cargo wasm", { stdio: "inherit" });
     execSync("cargo run-script optimize", { stdio: "inherit" });
-    execSync(`cp artifacts/${contract.replace(/-/g, "_")}{-aarch64,}.wasm`);
   }
 
   const isNonArm64 = fs.existsSync(
