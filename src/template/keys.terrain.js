@@ -9,4 +9,7 @@ module.exports = {
   custom_tester_2: {
     privateKey: "fGl1yNoUnnNUqTUXXhxH9vJU0htlz9lWwBt3fQw+ixw=",
   },
+  // custom_tester_3: {
+  //   keyName: "example",
+  // },
 };
