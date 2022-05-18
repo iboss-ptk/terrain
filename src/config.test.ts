@@ -166,12 +166,12 @@ test('load config', () => {
 
 test('load wallets', () => {
   const wallets = loadKeys()
-  const ct1 = wallets.customtester1 as MnemonicKey
+  const ct1 = wallets.custom_tester_1 as MnemonicKey
   expect(ct1.mnemonic).toBe(
     'shiver position copy catalog upset verify cheap library enjoy extend second peasant basic kit polar business document shrug pass chuckle lottery blind ecology stand'
   )
 
-  const ct2 = wallets.customtester2 as RawKey
+  const ct2 = wallets.custom_tester_2 as RawKey
   expect(ct2.privateKey.toString('base64')).toBe(
     'fGl1yNoUnnNUqTUXXhxH9vJU0htlz9lWwBt3fQw+ixw='
   )

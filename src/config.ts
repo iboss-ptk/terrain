@@ -2,6 +2,7 @@ import * as R from "ramda";
 import * as fs from "fs-extra";
 import { LCDClientConfig, MnemonicKey, RawKey } from "@terra-money/terra.js";
 import { cli } from "cli-ux";
+import { CLIKey } from "@terra-money/terra.js/dist/key/CLIKey";
 
 type Fee = {
   gasLimit: number;
@@ -88,14 +89,23 @@ export const loadKeys = (
 ): { [keyName: string]: RawKey } => {
   const keys = require(path);
   return R.map(
-    (w) =>
-      w.privateKey
-        ? new RawKey(Buffer.from(w.privateKey, "base64"))
-        : w.mnemonic
-        ? new MnemonicKey(w)
-        : cli.error(
-            "Error: Key must be defined with either `privateKey` or `mnemonic`"
+    R.cond([
+      [
+        R.has('privateKey'),
+        ({privateKey}) => {
+          return new RawKey(Buffer.from(privateKey, 'base64'))
+        },
+      ],
+      [R.has('mnemonic'), w => new MnemonicKey(w)],
+      [R.has('keyName'), w => new CLIKey(w)],
+      [
+        R.T,
+        () =>
+          cli.error(
+            'Error: Key must be defined with either `privateKey`, `mnemonic` or `keyName`'
           ),
+      ],
+    ]),
     keys
   );
 };
