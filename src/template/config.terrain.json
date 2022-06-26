@@ -30,14 +30,14 @@
   },
   "testnet": {
     "_connection": {
-      "chainID": "bombay-12",
-      "URL": "https://bombay-lcd.terra.dev"
+      "chainID": "pisco-1",
+      "URL": "https://pisco-lcd.terra.dev"
     }
   },
   "localterra": {
     "_connection": {
       "chainID": "localterra",
-      "URL": "http://localhost:3060"
+      "URL": "http://localhost:1317"
     }
   }
 }

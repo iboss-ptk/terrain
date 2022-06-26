@@ -11,7 +11,7 @@ export default class CodeNew extends Command {
       default: "./contracts",
     }),
     version: flags.string({
-      default: "0.16",
+      default: "1.0",
     }),
   };
 

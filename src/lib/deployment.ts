@@ -8,6 +8,7 @@ import {
   MsgMigrateContract,
   MsgStoreCode,
   Wallet,
+  isTxError,
 } from "@terra-money/terra.js";
 import { execSync } from "child_process";
 import { cli } from "cli-ux";
@@ -75,10 +76,11 @@ export const storeCode = async ({
     ],
     fee: new Fee(store.fee.gasLimit, store.fee.amount),
   });
-
   const result = await lcd.tx.broadcastSync(storeCodeTx);
-  if (typeof result.code !== "undefined") {
-    return cli.error(result.raw_log);
+  if (isTxError(result)) {
+    return cli.error(
+      `store code failed. code: ${result.code}, codespace: ${result.codespace}, raw_log: ${result.raw_log}`
+    );
   }
 
   let res;
@@ -121,7 +123,7 @@ export const storeCode = async ({
     if (error instanceof SyntaxError) {
       cli.error(res.raw_log);
     } else {
-      cli.error(`Unexpcted Error: ${error}`);
+      cli.error(`Unexpected Error: ${error}`);
     }
   }
 };
@@ -165,7 +167,9 @@ export const instantiate = async ({
         signer.key.accAddress,
         admin, // can migrate
         codeId,
-        instantiation.instantiateMsg
+        instantiation.instantiateMsg,
+        undefined,
+        contract
       ),
     ],
     fee: new Fee(instantiation.fee.gasLimit, instantiation.fee.amount),
@@ -173,6 +177,11 @@ export const instantiate = async ({
 
   const resInstant = await lcd.tx.broadcast(instantiateTx);
 
+  if (isTxError(resInstant)) {
+    return cli.error(
+      `instantiate failed. code: ${resInstant.code}, codespace: ${resInstant.codespace}, raw_log: ${resInstant.raw_log}`
+    );
+  }
   let log = [];
   try {
     log = JSON.parse(resInstant.raw_log);
@@ -181,16 +190,16 @@ export const instantiate = async ({
     if (error instanceof SyntaxError) {
       cli.error(resInstant.raw_log);
     } else {
-      cli.error(`Unexpcted Error: ${error}`);
+      cli.error(`Unexpected Error: ${error}`);
     }
   }
 
   cli.action.stop();
 
   const contractAddress = log[0].events
-    .find((event: { type: string }) => event.type === "instantiate_contract")
+    .find((event: { type: string }) => event.type === "instantiate")
     .attributes.find(
-      (attr: { key: string }) => attr.key === "contract_address"
+      (attr: { key: string }) => attr.key === "_contract_address"
     ).value;
 
   const updatedRefs = setContractAddress(
@@ -256,7 +265,7 @@ export const migrate = async ({
     if (error instanceof SyntaxError) {
       cli.error(resInstant.raw_log);
     } else {
-      cli.error(`Unexpcted Error: ${error}`);
+      cli.error(`Unexpected Error: ${error}`);
     }
   }
 

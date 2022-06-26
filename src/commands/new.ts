@@ -16,7 +16,7 @@ export default class New extends Command {
   static flags = {
     path: flags.string({ description: "path to keep the project" }),
     version: flags.string({
-      default: "0.16",
+      default: "1.0",
     }),
   };
 
@@ -52,7 +52,9 @@ export default class New extends Command {
     await new Promise((resolve, reject) => {
       request
         .get(
-          "https://github.com/iboss-ptk/terrain-frontend-template/archive/refs/heads/main.zip"
+          "https://github.com/tuky191/terrain-frontend-template/archive/refs/heads/main.zip"
+          //Temp change required, @terra-money v3.1.3 needed
+          //"https://github.com/iboss-ptk/terrain-frontend-template/archive/refs/heads/main.zip"
         )
         .on("error", (error) => {
           reject(error);
