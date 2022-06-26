@@ -24,8 +24,14 @@
   },
   "mainnet": {
     "_connection": {
+      "chainID": "phoenix-1",
+      "URL": "https://phoenix-lcd.terra.dev"
+    }
+  },
+  "mainnet_classic": {
+    "_connection": {
       "chainID": "columbus-5",
-      "URL": "https://lcd.terra.dev"
+      "URL": "https://columbus-lcd.terra.dev"
     }
   },
   "testnet": {
