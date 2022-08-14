@@ -1,3 +1,9 @@
+__THIS REPO IS ARCHIVED IN FAVOR OF [terra-money/terrain](https://github.com/terra-money/terrain).__
+
+@iboss-ptk, original author, is actively working on similar tool called [Beaker](https://github.com/osmosis-labs/beaker). That is started on Osmosis, but designed be adaptable on every cosmwasm enabled chain.
+
+---
+
 # Terrain
 
 <p align="center" >
